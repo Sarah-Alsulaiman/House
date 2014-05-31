@@ -1,0 +1,199 @@
+@charset "utf-8";
+
+* { 
+    /*-webkit-user-select: none; */
+   -webkit-tap-highlight-color: rgba(0,0,0,0);   
+}
+
+body {
+   margin: 0;
+   padding: 0;
+   color: #555;
+   font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-weight: 300;
+   line-height: 1.625;
+   overflow: hidden;
+   background-color: rgba(185, 185, 200, .9); 
+}
+
+#title {
+  margin-top: 20px;
+  margin-left: 550px;
+}
+
+#rosie-code {
+   margin-top: 0px;
+   margin-left: 850px;
+   margin-right: auto;
+   width: 1400px;
+   height: 1000px;
+   /*border: 1px solid black;*/
+   background-color: white; 
+}
+
+
+#rosie-output {
+   position: absolute;
+   left: 200px;
+   top: 80px;
+   width: 600px;
+   height: 920px;
+   background: url("../images/blank.png");
+   
+}
+
+.level-text {
+   background-color: white;
+   width: 890px;
+   padding: 5px;
+   text-decoration: none;
+   font-family: sans-serif;
+   font-size: 19px;
+   color: purple;
+   margin-top: 10px;
+   margin-left: 850px;
+   border: 1px solid white;
+   direction:rtl;
+}
+
+
+.index-text {
+  background-color: white;
+   width: 890px;
+   height: 400px;
+   text-decoration: none;
+   font-family: sans-serif;
+   font-size: 19px;
+   color: purple;
+   margin-top: 10px;
+   margin-left: 550px;
+   border: 1px solid white;
+   position: absolute;
+}
+
+#level-h {
+  text-decoration: underline;
+  font-weight:bold;
+}
+A:link {text-decoration: none; color: grey;}
+A:visited {text-decoration: none}
+A:active {text-decoration: none}
+A:hover {text-decoration: underline; color: rgba(102, 0, 102, .6);}
+
+
+#rosie-toolbar {
+   background-color: rgba(185, 185, 200, 1); 
+   border-radius: 15px;
+   border: 2px solid;
+   border-color:  rgba(102, 0, 102, .6);
+   position: absolute;
+   top: 925px;
+   left: 1200px;
+   text-align: center;
+   padding: 5px;
+   width: 150px;
+   z-index: 2147483647;
+}
+
+button {
+   outline: none;
+   border: none;
+   width: 75px;
+   height: 25px;
+   border-radius: 2px;
+   margin-left: 0px;
+   margin-right: 10px;
+   display: inline-block;
+}
+
+#play-button { background: url("../images/show_arabic.png")  0 no-repeat; background-position: 5px 5px; }
+#play-button:active { background-position: 8px 8px; }
+
+
+.background {
+  position: absolute;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+  opacity: 100;
+  z-index: 1;
+  visibility : hidden;
+  
+}
+
+.roof {
+   position: absolute;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+   opacity: 100;
+   z-index: 2;
+   visibility : hidden;
+   left: 200px;
+   top: 80px;
+  
+}
+
+
+.wall {
+   position: absolute;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+   opacity: 100;
+   z-index: 2;
+   visibility : hidden;
+   left: 200px;
+   top: 80px;
+}
+
+
+.door {
+   position: absolute;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+   opacity: 100;
+   z-index: 2;
+   visibility : hidden;
+   left: 200px;
+   top: 80px;
+}
+
+
+.windows {
+   position: absolute;
+   opacity: 1;
+   z-index: 2;
+   visibility : hidden;
+   left: 200px;
+   top: 80px;
+}
+
+.lights {
+   position: absolute;
+   opacity: 1;
+   z-index: 2;
+   visibility : hidden;
+   left: 200px;
+   top: 80px;
+}
+
+.hint {
+   position: absolute;
+   transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+   opacity: 0;
+   z-index: -1;
+}
+
+#hint1 {
+   left: 1100px;
+   top: 200px;
+}
+
+#hint2 {
+   left: 1050px;
+   top: 480px;
+}

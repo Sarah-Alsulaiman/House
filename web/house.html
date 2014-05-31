@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+
+    <title>House</title>
+    <link rel="stylesheet" href="css/homie.css">
+    <link rel="stylesheet" type="text/css" href="css/jqdialog.css"/>
+    
+    <script src="http://www.parsecdn.com/js/parse-1.1.15.min.js"></script>
+    
+    <script type="text/javascript" src="js/loadxmlstring.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jqdialog.min.js"></script>
+    
+    <script type="text/javascript" src="blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="blockly/storage.js"></script>
+    <script type="text/javascript" src="blockly/_messages.js"></script>
+    <script type="text/javascript" src="blockly/javascript.js"></script>
+    
+    <script type="text/javascript" src="js/custom_blockly.js"></script>
+    <script type="text/javascript" src="js/language.js"></script>
+    <script type="text/javascript" src="js/generator.js"></script>
+    <script type="text/javascript" src="js/virtual.js"></script>
+    <script type="text/javascript" src="js/toolbox.js"></script>
+    <script type="text/javascript" src="js/homie.js"></script>
+    
+  </head>
+  <body>
+    <img src="images/title.png" id="title">
+    
+    <div class="level-text">
+      <div id="level-h" style="display:inline;"> </div> 
+      <div id="full_text_div"  style="display:inline; padding: 10px;"> </div>
+    </div>
+    
+    <div id="rosie-code" style="width: 900px; height: 815px;">
+    </div>
+    
+    <!-- POPUP HINT TEXT -->
+    <img src="images/hint1.png" id="hint1" class="hint">
+    <img src="images/hint2.png" id="hint2" class="hint">
+     
+    <div id="repeat_hint" class="hint"> </div>
+    
+    <div id="rosie-output"> 
+      <img scr="images/blank.png" id="blank" class="background">
+      <img src="images/morning.png" id="morning" class="background">
+      <img src="images/evening.png" id="evening" class="background">
+      <img src="images/Chicago.png" id="Chicago" class="background">
+      <img src="images/Boston.png" id="Boston" class="background">
+      
+    </div>
+    
+    
+    <!-- TOOLBAR -->
+    <div id="rosie-toolbar">
+      <div>
+        <button id="play-button" onclick="sendBlocklyCode(true);"></button>
+      </div>
+    </div>
+    
+    
+    <div id="images"> </div>
+    <script type="application/dart" src="house.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+    <script type="text/javascript" >
+      init();
+      </script>
+  </body>
+</html>
