@@ -22,9 +22,6 @@ String CURRENT_CITY;
 /** Random Color **/
 String CURRENT_COLOR;
 
-/** Random weather **/
-String CURRENT_WEATHER;
-
 /** Colors available for each outfit **/
 List colors = ['red', 'blue', 'gold', 'lime', 'black', 'pink', 'orange' , 'purple', 'silver'];
 
@@ -37,11 +34,11 @@ bool REPEAT_LIGHT = false;
 
 
 //format [ [blockName, value, levels] ]
-List blocks = [  ['repeat', false, 6],  ['lights', false, 2], ['lights_on', false, 2],
+List blocks = [  ['repeat', false, 3],  ['lights', false, 2], ['lights_on', false, 2],
                  ['roof', false, 1,2,3,4,5,6], ['windows', false, 1,2,3,4,5,6], ['door', false, 1,2,3,4,5,6], ['wall', false, 1,2,3,4,5,6],
-                 ['abstraction', false, 4, 5], ['call', false, 4, 5], ['func', false, 4, 5],
-                 ['other', false, 3, 5], ['then', false, 3, 5],
-                 ['time', false, 3], ['drawing', false, 5], ['if', false, 3, 5],
+                 ['abstraction', false, 5, 6], ['call', false, 5, 6], ['func', false, 5, 6],
+                 ['other', false, 4, 6], ['then', false, 4, 6],
+                 ['time', false, 4], ['drawing', false, 6], ['if', false, 4, 6],
                   
               ];
 
@@ -68,49 +65,28 @@ Map text = new Map <String, String> ();
 // Main function
 //----------------------------------------------------------------------
 void main() {
-  
   window.onMessage.listen((evt) {
-    
     String msg = "${evt.data}";
-    
     if (msg.startsWith("@dart")) {
-      CURRENT_LEVEL = msg.substring(5,6);
-      text['if'] = (CURRENT_LEVEL == "3") ? "You need to account for lights depending on the time" : "You need to account for a house in Chicago and another in Boston";
-      
-    
-      parts = msg.split("#");
-      randomize();
-      compile(parts[1]);
-      
-      //print('Dart received code from HTML ');
-      
-      if (outfits.length != 0) {
+       CURRENT_LEVEL = msg.substring(5,6);
+       text['if'] = (CURRENT_LEVEL == "4") ? "You need to account for lights depending on the time" : "You need to account for a house in Chicago and another in Boston";
+       parts = msg.split("#");
+       randomize();
+       compile(parts[1]);
+       
+       if (outfits.length != 0) { Timer.run(() => display()); }
         
-        Timer.run(() => display());
-      }
-      
-      timer = new Timer.periodic(new Duration(milliseconds: 1000), (Timer t) {
-        if (outfits.length == 0) {
-          timer.cancel();
-          if (check_input) {
-            sendMessage("DONE!");
-          }
-          
-          else
-            sendMessage("error " + text[ERR_MSG]);
-        }
-        else {
-          //if (check_input)
-          display();
-        }
-      });
-      sendMessage("GOT IT!");
-      /*if (CURRENT_LEVEL == "3" || CURRENT_LEVEL == "5" || int.parse(CURRENT_LEVEL) > 6) { 
-        String background = (blocks[block_name['drawing']][1] == true)? CURRENT_CITY : CURRENT_TIME; 
-        sendMessage("bg " + background);
-      }*/
+       timer = new Timer.periodic(new Duration(milliseconds: 1000), (Timer t) {
+       if (outfits.length == 0) {
+        timer.cancel();
+        if (check_input) { sendMessage("DONE!"); }
+        else { sendMessage("error " + text[ERR_MSG]); }
+       }
+       else { display(); }
+       });
+       sendMessage("GOT IT!"); 
     }
-
+  
   });
   
   block_name['repeat'] = 0;
@@ -150,17 +126,13 @@ void main() {
   text['then'] = "Make sure you choose a house for each case";
   text['time'] = "Remember, it might be a morning or evening";
   text['drawing'] = "Remember, there are two cases";
-  
- 
-  
-  
+   
   text['abstraction'] = "Make sure you fill the definition";
   text['call'] = "You created a definition but didn't use it!";
   text['func'] = "Outfit definitions menu help you create a shortcut";
   text['city'] = "Remember, you need to build your favorite house in Chicago!";
   
   text['count'] = "Remember, you need to turn the lights on and off 4 times in a row!";
-  
   
   text['repeat_stack'] = "You didn't choose anything to repeat, please place the blocks inside the repeat block";
   text['repeat_light'] = "Remember, the lights block needs to be repeated!"; 
@@ -197,7 +169,6 @@ void compile(String json) {
   commands = parseCode(script);
   //print(commands);
   
-  
   interpret(commands, true);
   
   // Validate user answers here...
@@ -216,14 +187,12 @@ void compile(String json) {
         check_input = false;
       }
       
-      if (CURRENT_LEVEL == "5" && ! procedure_riyadh) {
+      if (CURRENT_LEVEL == "6" && ! procedure_riyadh) {
         ERR_MSG = 'city';
         check_input = false;
       }
       
-    }
-    
-    
+    }  
   }
     
   
@@ -279,10 +248,9 @@ List parseCode(code) {
 //--------------------------------------------------------------------------
 void display() {
   
-  String outfit = outfits[0]; print("current = $outfit");
+  String outfit = outfits[0]; //print("current = $outfit");
   sendMessage("outfit " + outfit);
   outfits.removeAt(0);
-  
 }
 
 
@@ -334,7 +302,7 @@ void interpret (List commands, bool consider) {
           }
         }
         
-        if (CURRENT_LEVEL == "3" && color == "on") {
+        if (CURRENT_LEVEL == "4" && color == "on") {
           if (CHECK_AGAINST == "morning") {
             if (CURRENT_BLOCK == "then") {
               ERROR_THEN = 'lights_on_mismatch';
@@ -356,7 +324,7 @@ void interpret (List commands, bool consider) {
           
         }
         
-        else if (CURRENT_LEVEL == "3" && color == "off") {
+        else if (CURRENT_LEVEL == "4" && color == "off") {
           if (CHECK_AGAINST == "morning") {
             if (CURRENT_BLOCK == "then") {
               ERROR_THEN = '';
@@ -400,7 +368,7 @@ void processRepeat(List nested, bool consider) {
   
   blocks[block_name['repeat']][1] = true; //print("repeat FOUND");
   
-  if (count != 4 && CURRENT_LEVEL == "6") {
+  if (count != 4 && CURRENT_LEVEL == "3") {
     ERR_MSG = 'count';
   }
   
@@ -417,12 +385,12 @@ void processRepeat(List nested, bool consider) {
     LIGHTS_CHECK = false;
   }
   
-  if (!REPEAT_LIGHT && CURRENT_LEVEL == "6") { //didn't encounter lights block inside repeat
+  if (!REPEAT_LIGHT && CURRENT_LEVEL == "3") { //didn't encounter lights block inside repeat
     ERR_MSG = 'repeat_light';
     
   }
   
-  if (block.length < 1 && CURRENT_LEVEL == "6") {
+  if (block.length < 1 && CURRENT_LEVEL == "3") {
       ERR_MSG = 'repeat_stack';
     }
   
@@ -440,7 +408,7 @@ void processCall(List nested, bool consider) {
   
   blocks[block_name['call']][1] = true; //print("CALL FOUND");
   
-  if (CURRENT_LEVEL == "5") {
+  if (CURRENT_LEVEL == "6") {
     if (CHECK_AGAINST == "Chicago") {
       if (CURRENT_BLOCK == "then") {
         procedure_riyadh = true;
@@ -610,11 +578,8 @@ void clearBlocks() {
 // Send a message to the javascript blockly window
 //--------------------------------------------------------------------------
 void sendMessage(String message) {
-  /*if (ws != null && ws.readyState == WebSocket.OPEN) {
-    ws.send("@blockly#$CONNECTION_ID#$message");
-  }*/
   var msg = "@blockly#$message";
   var origin = window.location.protocol + "//" + window.location.host;
   window.postMessage(msg, origin);
-}
+  }
 

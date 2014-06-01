@@ -41,10 +41,10 @@ function logParse(type, comment) {
    var CURRENT_LEVEL = getLevel();
    var LEVELS_MSG = ["<br>In general, a home consist of wall, roof, door, and windows. Can you build a home using these blocks<br><br>",
                        "<br>Can you to build a house with different colors and switch the lights on? <br><br>",
+                       "<br>A flashing house will keep turning on and off the lights over and over again.<br> Can you build a flashing house that will keep turning the lights on and off 4 times?",
                        "<br>Can you program a house so that when it is daytime, the lights are switched off and when it is night time, it will be switched on?",
                        "<br>Now, you can build a house with your favorite colors and give it a name so that you can build it faster anytime later!",
                        "<br>Can you build a house so that when the city is Chicago, your favorite house will be built, otherwise, a different house will be built",
-                       "<br>A flashing house will keep turning on and off the lights over and over again.<br> Can you build a flashing house that will keep turning the lights on and off 4 times?",
                       "<br>Now, you can play with the blocks as you like!",
                       ];
   
@@ -494,20 +494,20 @@ function inject() {
          	fadeOutAfterDelay("hint1", 5000);
          	break;
        	
-       	case 3:
+       	case 4:
         	buildHouse();
          	loadBlocks(CURRENT_LEVEL);
          	break;
      	
-     	case 4:
+     	case 5:
        		buildHouse();
      		loadBlocks(CURRENT_LEVEL);
          	break; 
        		
     }
-    if (CURRENT_LEVEL >= 4) {
+    if (CURRENT_LEVEL >= 5) {
     	restoreProcedures();
-     	// in LEVEL 4, start listenning to events & add virtual seperator
+     	// in LEVEL 5, start listenning to events & add virtual seperator
      	Blockly.mainWorkspace.traceOn();
      	Blockly.mainWorkspace.getCanvas().addEventListener('blocklyWorkspaceChange', workspaceChange, false);
      	Blockly.mainWorkspace.addVirtual();
@@ -521,12 +521,12 @@ function inject() {
 //---------------------------------------------------------------------------------------------  
 function loadBlocks (level) {
 	var xml;
-	if (level == 3) {
+	if (level == 4) {
 		xml = Blockly.Xml.textToDom(      
 			'<xml>' +    
 			'  <block type="wall"> <next> <block type="roof"> <next> <block type="door"> <next> <block type="windows"></block> </next> </block> </next> </block> </next> </block>' +
 			'</xml>');
-	} else if(level == 4) {
+	} else if(level == 5) {
 		xml = Blockly.Xml.textToDom(      
 			'<xml>' +    
 			'  <block type="procedures_defnoreturn" x="500" y="25">' +
