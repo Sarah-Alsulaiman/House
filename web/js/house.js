@@ -12,20 +12,22 @@ function init() {
 	populate();
 	
 	// 3. Inject Blockly
-	controlTooltip2();
+	controlTooltip();
+	//controlTooltip2();
 	inject();     
 }
 
 //-----------------------------------------------------------------------------------------
 // Saving log data on Parse                                                                   
 //------------------------------------------------------------------------------------------
-function logParse(type, comment) {
+function logParse(type, key, comment) {
 	var Post = Parse.Object.extend("blockly");
 	var myPost = new Post();
 	
-	myPost.set("CODE", workspaceToText() );
-	myPost.set("LEVEL", getLevel() );
 	myPost.set("TYPE", type);
+	myPost.set("KEY", key);
+	myPost.set("LEVEL", getLevel() );
+	myPost.set("XML", workspaceToText() );
 	myPost.set("COMMENT", comment);
 	myPost.set("USER", "TODO");
 	
@@ -241,33 +243,31 @@ function fadeOutAfterDelay(id, delay) {
 //---------------------------------------------------------------------------
 function processEvent(event) {
 	var event = event.data;
-    var check = event.substring(0,8);
-     	
-    if ( check == "@blockly" ) {
+    var msgPart = event.split('#');
+    
+    if ( msgPart[0] == "@blockly" ) {
     	//console.log("HTML received message from dart " + event);
-     	var parts = event.split('#');
      	
-     	if (parts[1].substring(0, 6) == "error ") {
+     	if (msgPart[1] == "error") {
      		Playing = false;
-     	 	var msg = parts[1].substring(6);
+     	 	var msg = msgPart[2];
+     	 	var key = msgPart[3];
      	 	showError(msg);
-     	 	if(LogRequest) { logParse("postError", msg); }
+     	 	if(LogRequest) { logParse("postError", key, msg); }
      	}
      	
-     	else if (parts[1] == "DONE!") {
+     	else if (msgPart[1] == "DONE!") {
        		Playing = false;
-       		if (LogRequest) { logParse("Success", ""); }
+       		if (LogRequest) { logParse("Success", "2", ""); }
        		window.setTimeout(function() { advanceLevel(); }, 500);
      	}
      	
-     	else if (parts[1].substring(0,7) == "outfit "){	 // received an outfit to display
-     		var outfit = parts[1].substring(7);
-     	 	//console.log("HTML received message from dart for outfit " + outfit);
+     	else if (msgPart[1] == "outfit"){	 // received an outfit to display
+     		var outfit = msgPart[2];
      		setHtmlVisibility(outfit, true);
-     		Blockly.mainWorkspace.highlightBlock2(parts[2], true);
-     	
+     		Blockly.mainWorkspace.highlightBlock2(msgPart[3], true);
      		if (outfit == "REPEAT") {
-     			popUpHint(parts); 
+     			popUpHint(msgPart); 
      	 	}
      	}
     }	
@@ -291,7 +291,7 @@ function popUpHint(parts) {
 	
 	var wsPosition = cumulativeOffset(document.getElementById('rosie-code'));
 	//console.log("wsPosition = " + wsPosition.top);
-  	var block = Blockly.mainWorkspace.getBlockById(parts[2]);
+  	var block = Blockly.mainWorkspace.getBlockById(parts[3]);
   	// Move the duplicate next to the old block.
 	var xy = block.getRelativeToSurfaceXY();
 	xy.x += wsPosition.left; //translate toolbox and text level here
@@ -300,7 +300,7 @@ function popUpHint(parts) {
 	xy.y += 20;	
   	var id = "repeat_hint";
   	var el = document.getElementById(id);
-  	el.innerHTML= 'ROUND ' + parts[3] + ' out of ' + parts[4];
+  	el.innerHTML= 'ROUND ' + parts[4] + ' out of ' + parts[5];
   	el.style.top =  xy.y + "px";
   	el.style.left = xy.x + "px";
   	setHtmlOpacity("repeat_hint", 1.0);
@@ -431,7 +431,7 @@ function sendBlocklyCode(log) {
        	if (code.length == 0) {
         	setHtmlOpacity("hint1", 1.0);
          	fadeOutAfterDelay("hint1", 5000);
-         	if(LogRequest) { logParse("preError", "No blocks");}
+         	if(LogRequest) { logParse("preError", "10", "No blocks");}
        	}
        	
        	else {
@@ -443,7 +443,7 @@ function sendBlocklyCode(log) {
          	if (!connected) {
            		setHtmlOpacity("hint2", 1.0);
            		fadeOutAfterDelay("hint2", 5000);
-           		if(LogRequest) { logParse("preError", "blocks not connected");}
+           		if(LogRequest) { logParse("preError", "11", "blocks not connected");}
          	}
          	
          	else {
@@ -463,7 +463,7 @@ function sendBlocklyCode(log) {
      
     }
     else {
-    	if(LogRequest) { logParse("preError", "still executing prior command"); }
+    	if(LogRequest) { logParse("preError", "12", "still executing prior command"); }
      	alert("still generating previous house");
     }
 }
@@ -549,7 +549,7 @@ function storeProcedure () {
 	var saved_procedure = '';
    	var current_xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
    	curret_xml_text = Blockly.Xml.domToText(current_xml);
-   	console.log( curret_xml_text );
+   	//console.log( curret_xml_text );
    	xmlDoc = loadXMLString(curret_xml_text);
    	
    	x = xmlDoc.getElementsByTagName('block');

@@ -80,7 +80,7 @@ void main() {
        if (outfits.length == 0) {
         timer.cancel();
         if (check_input) { sendMessage("DONE!"); }
-        else { sendMessage("error " + text[ERR_MSG]); }
+        else { sendMessage("error#" + text[ERR_MSG] + '#' + ERR_MSG); }
        }
        else { display(); }
        });
@@ -249,7 +249,7 @@ List parseCode(code) {
 void display() {
   
   String outfit = outfits[0]; //print("current = $outfit");
-  sendMessage("outfit " + outfit);
+  sendMessage("outfit#" + outfit);
   outfits.removeAt(0);
 }
 
