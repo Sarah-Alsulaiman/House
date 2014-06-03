@@ -12,7 +12,7 @@ function init() {
 	populate();
 	
 	// 3. Inject Blockly
-	controlTooltip();
+	controlTooltip2();
 	inject();     
 }
 
@@ -512,7 +512,7 @@ function inject() {
      	Blockly.mainWorkspace.getCanvas().addEventListener('blocklyWorkspaceChange', workspaceChange, false);
      	Blockly.mainWorkspace.addVirtual();
     }
-   	
+   	Blockly.addChangeListener(bumpBackBlocks);
     document.getElementById('full_text_div').innerHTML= LEVELS_MSG[CURRENT_LEVEL - 1];
 }
 
@@ -585,99 +585,153 @@ function restoreProcedures() {
     }
 }
 
+//----------------------------------------------------------------
+// Bump back blocks that are dragged outside workspace metrics
+//----------------------------------------------------------------
+
+function bumpBackBlocks () {
+        if (Blockly.Block.dragMode_ == 0) {
+          var metrics = Blockly.getMainWorkspaceMetrics();
+          if (metrics.contentTop < 0 ||
+              metrics.contentTop + metrics.contentHeight >
+              metrics.viewHeight + metrics.viewTop ||
+              metrics.contentLeft < (Blockly.RTL ? metrics.viewLeft : 0) ||
+              metrics.contentLeft + metrics.contentWidth > (Blockly.RTL ?
+                  metrics.viewWidth :
+                  metrics.viewWidth + metrics.viewLeft)) {
+            // One or more blocks is out of bounds.  Bump them back in.
+            var MARGIN = 5;
+            var ToolboxWidth = Blockly.Toolbox.width;
+            var blocks = Blockly.mainWorkspace.getTopBlocks(false);
+            for (var b = 0, block; block = blocks[b]; b++) {
+              var blockXY = block.getRelativeToSurfaceXY();
+              var blockHW = block.getHeightWidth();
+              
+              // Bump any block that's above the top back inside.
+              var overflow = metrics.viewTop + MARGIN - blockHW.height -
+                  blockXY.y + blockHW.height;
+              if (overflow > 0) {
+                block.moveBy(0, overflow);
+              }
+              // Bump any block that's below the bottom back inside.
+              var overflow = metrics.viewTop + metrics.viewHeight - MARGIN -
+                  blockXY.y - blockHW.height;
+              if (overflow < 0) {
+                block.moveBy(0, overflow);
+              }
+              // Bump any block that's off the left back inside.
+              var overflow = MARGIN + ToolboxWidth + metrics.viewLeft - blockXY.x - 0;
+                  //(Blockly.RTL ? 0 : blockHW.width);
+              if (overflow > 0) {
+                block.moveBy(overflow + 30, 0);
+              }
+              // Bump any block that's off the right back inside.
+              var overflow = metrics.viewLeft + metrics.viewWidth  - MARGIN - 
+                  blockXY.x + (Blockly.RTL ? 0 : 0) + blockHW.width + 30;
+              if (overflow < 0) {
+                block.moveBy(overflow  , 0);
+              }
+            }
+          }
+        }
+}
+
 //-------------------------------------------------------------------------------------
 // Control Tooltip code
 //-------------------------------------------------------------------------------------
 function controlTooltip() {
-
-Blockly.Tooltip.svgImg_ = null;
-     
+	Blockly.Tooltip.svgImg_ = null;  
 /**
-* Delay before tooltip appears.
-*/
+ * Delay before tooltip appears.
+ */
 Blockly.Tooltip.HOVER_MS = 100;
-     
+      
 
 /**
-* When hovering over an element, schedule a tooltip to be shown.  If a tooltip
-* is already visible, hide it if the mouse strays out of a certain radius.
-* @param {!Event} e Mouse event.
-* @private
-*/
+ * When hovering over an element, schedule a tooltip to be shown.  If a tooltip
+ * is already visible, hide it if the mouse strays out of a certain radius.
+ * @param {!Event} e Mouse event.
+ * @private
+ */
 Blockly.Tooltip.onMouseMove_ = function(e) {
-// if (!Blockly.Tooltip.element_ || !Blockly.Tooltip.element_.tooltip) {
-   // No tooltip here to show.
-  // return;
- //} //else if ((Blockly.ContextMenu && Blockly.ContextMenu.visible) 
-     //       ) { // ||Blockly.Block.dragMode_ != 0 COMMENT OUT DRAG MODE
-   // Don't display a tooltip when a context menu is active, or during a drag.
-   //return;
-// }
- if (Blockly.Tooltip.poisonedElement_ != Blockly.Tooltip.element_) {
-   // The mouse moved, clear any previously scheduled tooltip.
-   window.clearTimeout(Blockly.Tooltip.showPid_);
-   // Maybe this time the mouse will stay put.  Schedule showing of tooltip.
-   Blockly.Tooltip.lastX_ = e.clientX;
-   Blockly.Tooltip.lastY_ = e.clientY;
-   Blockly.Tooltip.showPid_ =
-       window.setTimeout(Blockly.Tooltip.show_, Blockly.Tooltip.HOVER_MS);
- }
+ // if (!Blockly.Tooltip.element_ || !Blockly.Tooltip.element_.tooltip) {
+    // No tooltip here to show.
+   // return;
+  //} //else 
+   if ((Blockly.ContextMenu && Blockly.ContextMenu.visible) ||Blockly.Block.dragMode_ != 0 ) {
+    // Don't display a tooltip when a context menu is active, or during a drag.
+    return;
+  }
+  if (Blockly.Tooltip.poisonedElement_ != Blockly.Tooltip.element_) {
+    // The mouse moved, clear any previously scheduled tooltip.
+    window.clearTimeout(Blockly.Tooltip.showPid_);
+    // Maybe this time the mouse will stay put.  Schedule showing of tooltip.
+    Blockly.Tooltip.lastX_ = e.clientX;
+    Blockly.Tooltip.lastY_ = e.clientY;
+    Blockly.Tooltip.showPid_ =
+        window.setTimeout(Blockly.Tooltip.show_, Blockly.Tooltip.HOVER_MS);
+  }
 };
 
-
-/**
-* Hide the tooltip.
-*/
-Blockly.Tooltip.hide = function() {
-
-var imgNode = document.getElementById(tipImg);
-if (imgNode) {
-if (tipImg != originalRoof && tipImg != originalWall && tipImg != originalDoor && tipImg != originalWindows && tipImg != originalLights) {
-imgNode.style.visibility = "hidden";
-
-}
-else {	
-}
-}
-
-//restore original image (if any) after preview
-imgNode = document.getElementById(tempImg);
-if (imgNode) {
-imgNode.style.visibility = "visible";
-imgNode.style.zIndex = originalZindex;
-}
-
- 	if (Blockly.Tooltip.visible) {
-   	Blockly.Tooltip.visible = false;
-   	if (Blockly.Tooltip.svgGroup_) {
-     	 Blockly.Tooltip.svgGroup_.style.display = 'none';
-   	}
- 	}
- 	window.clearTimeout(Blockly.Tooltip.showPid_);
-};
-
-     
-     
-/**
-* Create the tooltip and show it.
-* @private
-*/
-Blockly.Tooltip.show_ = function() {
- Blockly.Tooltip.poisonedElement_ = Blockly.Tooltip.element_;
- if (!Blockly.Tooltip.svgGroup_) {
-   return;
- }
- // Erase all existing text.
- goog.dom.removeChildren(
-     /** @type {!Element} */ (Blockly.Tooltip.svgText_));
- // Create new text, line by line.
- var tip = Blockly.Tooltip.element_.tooltip;
- if (goog.isFunction(tip)) {
-   tip = tip();
-   //console.log ("TIP = " + tip);
- }
  
- tipImg = tip;
+ /**
+ * Hide the tooltip.
+ */
+Blockly.Tooltip.hide = function() {
+	var preview = document.getElementById('preview');
+  	preview.style.visibility = "hidden";
+  		
+	var imgNode = document.getElementById(tipImg);
+	if (imgNode) {
+		if (tipImg != originalRoof && tipImg != originalWall && tipImg != originalDoor && tipImg != originalWindows && tipImg != originalLights) {
+		imgNode.style.visibility = "hidden";
+		imgNode.style.border = "none";
+  		imgNode.style.background = "none";
+		}
+	}
+	
+	//restore original image (if any) after preview
+	imgNode = document.getElementById(tempImg);
+	if (imgNode) {
+	imgNode.style.visibility = "visible";
+	imgNode.style.zIndex = originalZindex;
+	imgNode.style.border = "none";
+  	imgNode.style.background = "none";
+	}
+  	
+  if (Blockly.Tooltip.visible) {
+    Blockly.Tooltip.visible = false;
+    
+    
+    if (Blockly.Tooltip.svgGroup_) {
+      Blockly.Tooltip.svgGroup_.style.display = 'none';
+    }
+  }
+  window.clearTimeout(Blockly.Tooltip.showPid_);
+};
+ 
+      
+      
+/**
+ * Create the tooltip and show it.
+ * @private
+ */
+Blockly.Tooltip.show_ = function() {
+  Blockly.Tooltip.poisonedElement_ = Blockly.Tooltip.element_;
+  if (!Blockly.Tooltip.svgGroup_) {
+    return;
+  }
+  // Erase all existing text.
+  goog.dom.removeChildren(
+      /** @type {!Element} */ (Blockly.Tooltip.svgText_));
+  // Create new text, line by line.
+  var tip = Blockly.Tooltip.element_.tooltip;
+  if (goog.isFunction(tip)) {
+    tip = tip();
+    //console.log ("TIP = " + tip);
+  }
+  
+  tipImg = tip;
  var type = tipImg.split("-");
  if (type[0] == "roof")
  	tempImg = originalRoof;
@@ -691,139 +745,143 @@ Blockly.Tooltip.show_ = function() {
  	tempImg = originalLights;
  else
  	tempImg = '';
- 	
- 
- var imgNode = document.getElementById(tempImg);
- if (imgNode) {
- 	imgNode.style.visibility = "hidden";
- 	originalZindex = imgNode.style.zIndex;
- }
- 
- imgNode = document.getElementById(tipImg);
- if (imgNode) {
- 	imgNode.style.visibility = "visible";
- 	imgNode.style.zIndex = Zindex++;
- }
- 
- 
- 
- // Display the tooltip.
- Blockly.Tooltip.visible = true;
- Blockly.Tooltip.svgGroup_.style.display = 'block';
- // Resize the background and shadow to fit.
- var bBox = Blockly.Tooltip.svgText_.getBBox();
- var width = 2 * Blockly.Tooltip.MARGINS + bBox.width;
- var height = bBox.height;
- Blockly.Tooltip.svgBackground_.setAttribute('width', width);
- Blockly.Tooltip.svgBackground_.setAttribute('height', height);
- Blockly.Tooltip.svgShadow_.setAttribute('width', width);
- Blockly.Tooltip.svgShadow_.setAttribute('height', height);
- if (Blockly.RTL) {
-   // Right-align the paragraph.
-   // This cannot be done until the tooltip is rendered on screen.
-   var maxWidth = bBox.width;
-   for (var x = 0, textElement;
-        textElement = Blockly.Tooltip.svgText_.childNodes[x]; x++) {
-     textElement.setAttribute('text-anchor', 'end');
-     textElement.setAttribute('x', maxWidth + Blockly.Tooltip.MARGINS);
-   }
- }
- // Move the tooltip to just below the cursor.
- var anchorX = Blockly.Tooltip.lastX_;
- if (Blockly.RTL) {
-   anchorX -= Blockly.Tooltip.OFFSET_X + width;
- } else {
-   anchorX += Blockly.Tooltip.OFFSET_X;
- }
- var anchorY = Blockly.Tooltip.lastY_ + Blockly.Tooltip.OFFSET_Y;
+  	
+  
+  var imgNode = document.getElementById(tempImg);
+  if (imgNode) {
+  	imgNode.style.visibility = "hidden";
+  	originalZindex = imgNode.style.zIndex;
+  }
+  
+  imgNode = document.getElementById(tipImg);
+  if (imgNode) {
+  	imgNode.style.visibility = "visible";
+  	imgNode.style.zIndex = Zindex++;
+  	imgNode.style.border = "2px solid purple";
+  	imgNode.style.background = "rgba(255, 192, 203, 0.4)";
+  	var preview = document.getElementById('preview');
+  	preview.style.visibility = "visible";
+  }
+  
+  
+  
+  // Display the tooltip.
+  Blockly.Tooltip.visible = true;
+  Blockly.Tooltip.svgGroup_.style.display = 'block';
+  // Resize the background and shadow to fit.
+  var bBox = Blockly.Tooltip.svgText_.getBBox();
+  var width = 2 * Blockly.Tooltip.MARGINS + bBox.width;
+  var height = bBox.height;
+  Blockly.Tooltip.svgBackground_.setAttribute('width', width);
+  Blockly.Tooltip.svgBackground_.setAttribute('height', height);
+  Blockly.Tooltip.svgShadow_.setAttribute('width', width);
+  Blockly.Tooltip.svgShadow_.setAttribute('height', height);
+  if (Blockly.RTL) {
+    // Right-align the paragraph.
+    // This cannot be done until the tooltip is rendered on screen.
+    var maxWidth = bBox.width;
+    for (var x = 0, textElement;
+         textElement = Blockly.Tooltip.svgText_.childNodes[x]; x++) {
+      textElement.setAttribute('text-anchor', 'end');
+      textElement.setAttribute('x', maxWidth + Blockly.Tooltip.MARGINS);
+    }
+  }
+  // Move the tooltip to just below the cursor.
+  var anchorX = Blockly.Tooltip.lastX_;
+  if (Blockly.RTL) {
+    anchorX -= Blockly.Tooltip.OFFSET_X + width;
+  } else {
+    anchorX += Blockly.Tooltip.OFFSET_X;
+  }
+  var anchorY = Blockly.Tooltip.lastY_ + Blockly.Tooltip.OFFSET_Y;
 
- // Convert the mouse coordinates into SVG coordinates.
- var xy = Blockly.convertCoordinates(anchorX, anchorY, true);
- anchorX = xy.x;
- anchorY = xy.y;
+  // Convert the mouse coordinates into SVG coordinates.
+  var xy = Blockly.convertCoordinates(anchorX, anchorY, true);
+  anchorX = xy.x;
+  anchorY = xy.y;
 
- var svgSize = Blockly.svgSize();
- if (anchorY + bBox.height > svgSize.height) {
-   // Falling off the bottom of the screen; shift the tooltip up.
-   anchorY -= bBox.height + 2 * Blockly.Tooltip.OFFSET_Y;
- }
- if (Blockly.RTL) {
-   // Prevent falling off left edge in RTL mode.
-   anchorX = Math.max(Blockly.Tooltip.MARGINS, anchorX);
- } else {
-   if (anchorX + bBox.width > svgSize.width - 2 * Blockly.Tooltip.MARGINS) {
-     // Falling off the right edge of the screen;
-     // clamp the tooltip on the edge.
-     anchorX = svgSize.width - bBox.width - 2 * Blockly.Tooltip.MARGINS;
-   }
- }
- Blockly.Tooltip.svgGroup_.setAttribute('transform',
-     'translate(' + anchorX + ',' + anchorY + ')');
+  var svgSize = Blockly.svgSize();
+  if (anchorY + bBox.height > svgSize.height) {
+    // Falling off the bottom of the screen; shift the tooltip up.
+    anchorY -= bBox.height + 2 * Blockly.Tooltip.OFFSET_Y;
+  }
+  if (Blockly.RTL) {
+    // Prevent falling off left edge in RTL mode.
+    anchorX = Math.max(Blockly.Tooltip.MARGINS, anchorX);
+  } else {
+    if (anchorX + bBox.width > svgSize.width - 2 * Blockly.Tooltip.MARGINS) {
+      // Falling off the right edge of the screen;
+      // clamp the tooltip on the edge.
+      anchorX = svgSize.width - bBox.width - 2 * Blockly.Tooltip.MARGINS;
+    }
+  }
+  Blockly.Tooltip.svgGroup_.setAttribute('transform',
+      'translate(' + anchorX + ',' + anchorY + ')');
 };
-     
-     //***********************************************************************************************************************
-     
-   /**
-* Show the context menu for this block.
-* @param {number} x X-coordinate of mouse click.
-* @param {number} y Y-coordinate of mouse click.
-* @private
-*/
+      
+      //***********************************************************************************************************************
+      
+    /**
+ * Show the context menu for this block.
+ * @param {number} x X-coordinate of mouse click.
+ * @param {number} y Y-coordinate of mouse click.
+ * @private
+ */
 Blockly.Block.prototype.showContextMenu_ = function(x, y) {
- if (!this.contextMenu) {
-   return;
- }
- // Save the current block in a variable for use in closures.
- var block = this;
- var options = [];
+  if (!this.contextMenu) {
+    return;
+  }
+  // Save the current block in a variable for use in closures.
+  var block = this;
+  var options = [];
 
- if (this.deletable) {
-   // Option to duplicate this block.
-   var duplicateOption = {
-     text: Blockly.MSG_DUPLICATE_BLOCK,
-     enabled: true,
-     callback: function() {
-       block.duplicate_();
-     }
-   };
-   if (this.getDescendants().length > this.workspace.remainingCapacity()) {
-     duplicateOption.enabled = false;
-   }
-   options.push(duplicateOption);
+  if (this.deletable) {
+    // Option to duplicate this block.
+    var duplicateOption = {
+      text: Blockly.MSG_DUPLICATE_BLOCK,
+      enabled: true,
+      callback: function() {
+        block.duplicate_();
+      }
+    };
+    if (this.getDescendants().length > this.workspace.remainingCapacity()) {
+      duplicateOption.enabled = false;
+    }
+    options.push(duplicateOption);
 
-   // Option to delete this block.
-   // Count the number of blocks that are nested in this block.
-   var descendantCount = this.getDescendants().length;
-   if (block.nextConnection && block.nextConnection.targetConnection) {
-     // Blocks in the current stack would survive this block's deletion.
-     descendantCount -= this.nextConnection.targetBlock().
-         getDescendants().length;
-   }
-   var deleteOption = {
-     text: descendantCount == 1 ? Blockly.MSG_DELETE_BLOCK :
-         Blockly.MSG_DELETE_X_BLOCKS.replace('%1', descendantCount),
-     enabled: true,
-     callback: function() {
-       block.dispose(true, true);
-     }
-   };
-   options.push(deleteOption);
- }
+    // Option to delete this block.
+    // Count the number of blocks that are nested in this block.
+    var descendantCount = this.getDescendants().length;
+    if (block.nextConnection && block.nextConnection.targetConnection) {
+      // Blocks in the current stack would survive this block's deletion.
+      descendantCount -= this.nextConnection.targetBlock().
+          getDescendants().length;
+    }
+    var deleteOption = {
+      text: descendantCount == 1 ? Blockly.MSG_DELETE_BLOCK :
+          Blockly.MSG_DELETE_X_BLOCKS.replace('%1', descendantCount),
+      enabled: true,
+      callback: function() {
+        block.dispose(true, true);
+      }
+    };
+    options.push(deleteOption);
+  }
 
- // Option to get help.
- var url = goog.isFunction(this.helpUrl) ? this.helpUrl() : this.helpUrl;
- var helpOption = {enabled: !!url};
- helpOption.text = Blockly.MSG_HELP;
- helpOption.callback = function() {
-   block.showHelp_();
- };
- options.push(helpOption);
+  // Option to get help.
+  var url = goog.isFunction(this.helpUrl) ? this.helpUrl() : this.helpUrl;
+  var helpOption = {enabled: !!url};
+  helpOption.text = Blockly.MSG_HELP;
+  helpOption.callback = function() {
+    block.showHelp_();
+  };
+  options.push(helpOption);
 
- // Allow the block to add or modify options.
- if (this.customContextMenu) {
-   this.customContextMenu(options);
- }
+  // Allow the block to add or modify options.
+  if (this.customContextMenu) {
+    this.customContextMenu(options);
+  }
 
- Blockly.ContextMenu.show(x, y, options);
+  Blockly.ContextMenu.show(x, y, options);
 };
 }
