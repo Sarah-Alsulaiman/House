@@ -1,4 +1,9 @@
 function UpdateBlocklyCode() {
+	Blockly.Virtual.Width = 280;
+	Blockly.Virtual.Height = 670;
+	Blockly.Virtual.X = 600;
+	Blockly.Virtual.Y = 20;
+		
 	Blockly.Css.CONTENT2 = [
 		  '.blocklySelected>.blocklyPath {',
 		  '  stroke-width: 4px;',
@@ -576,25 +581,31 @@ Blockly.BlockSvg.prototype.renderDrawLeft_ = function(steps, highlightSteps,
  		* Add a virtual seperator
  		***********************************************************************************************/
 		Blockly.Workspace.prototype.addVirtual = function() {
-		  //if (Blockly.hasVirtual ) {
-		    this.virtual = new Blockly.Virtual(this);
+		    /*this.virtual = new Blockly.Virtual(this);
 		    var svgVirtual = this.virtual.createDom();
-		    this.svgGroup_.insertBefore(svgVirtual, this.svgBlockCanvas_);
-		    //this.virtual.init();
-		  //}
-		  
-		  //else {
-		  	//console.log("NONONONONO!!!!");
-		  //}
-		  
-		  /*var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-			svg.setAttribute('style', 'border: 10px solid black');
-			svg.setAttribute('width', '600');
-			svg.setAttribute('height', '250');
-			svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-			//document.body.appendChild(svg);
+		    this.svgGroup_.insertBefore(svgVirtual, this.svgBlockCanvas_);*/
 			
-			this.svgGroup_.insertBefore(svg, this.svgBlockCanvas_);*/
+			var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+			var svgNS = svg.namespaceURI;
+			
+			var rect = document.createElementNS(svgNS,'rect');
+		    rect.setAttribute('x',Blockly.Virtual.X);
+		    rect.setAttribute('y',Blockly.Virtual.Y);
+		    rect.setAttribute('width',Blockly.Virtual.Width);
+		    rect.setAttribute('height',Blockly.Virtual.Height);
+		    rect.setAttribute('fill','#95B3D7');
+		    rect.setAttribute('stroke', 'pink');
+		    rect.setAttribute('stroke-width', 5);
+		    svg.appendChild(rect);
+		    
+		    var text = document.createElementNS(svgNS, 'text');
+			text.setAttribute('x', Blockly.Virtual.X + 50);
+			text.setAttribute('y', Blockly.Virtual.Y + 50);
+			text.setAttribute('fill', '#000');
+			text.textContent = 'Definitions';
+			svg.appendChild(text);
+		    
+		    this.svgGroup_.insertBefore(svg, this.svgBlockCanvas_);//*/
 		};
 		
 		Blockly.Workspace.prototype.dispose = function() {
@@ -835,7 +846,7 @@ Blockly.BlockSvg.prototype.renderDrawLeft_ = function(steps, highlightSteps,
       
       //***********************************************************************************************************************
      
-     
+     var default_procedure = false;
 /**
  * Ensure two identically-named procedures don't exist.
  * @param {string} name Proposed procedure name.
@@ -1208,7 +1219,7 @@ Blockly.Tooltip.createDom = function() {
       Blockly.createSvgElement(
           'image',{'width': 300, 'height': 400} , svgGroup));
   
-  //Blockly.Tooltip.svgImg_.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/rosie.png');
+  Blockly.Tooltip.svgImg_.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/rosie.png');
     
   Blockly.Tooltip.svgOutfit_ = /** @type {!SVGTextElement} */ (
       Blockly.createSvgElement(

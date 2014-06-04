@@ -529,7 +529,7 @@ function loadBlocks (level) {
 	} else if(level == 5) {
 		xml = Blockly.Xml.textToDom(      
 			'<xml>' +    
-			'  <block type="procedures_defnoreturn" x="500" y="25">' +
+			'  <block type="procedures_defnoreturn" x="' + Blockly.Virtual.X + '" y="' + Blockly.Virtual.Y + '">' +
 			' <mutation></mutation> ' +
 			'   <field name="NAME">Name</field> ' +
 			'	<statement name="STACK"> ' +
@@ -585,56 +585,92 @@ function restoreProcedures() {
     }
 }
 
-//----------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 // Bump back blocks that are dragged outside workspace metrics
-//----------------------------------------------------------------
-
+//---------------------------------------------------------------------------------------
 function bumpBackBlocks () {
-        if (Blockly.Block.dragMode_ == 0) {
-          var metrics = Blockly.getMainWorkspaceMetrics();
-          if (metrics.contentTop < 0 ||
-              metrics.contentTop + metrics.contentHeight >
-              metrics.viewHeight + metrics.viewTop ||
-              metrics.contentLeft < (Blockly.RTL ? metrics.viewLeft : 0) ||
-              metrics.contentLeft + metrics.contentWidth > (Blockly.RTL ?
-                  metrics.viewWidth :
-                  metrics.viewWidth + metrics.viewLeft)) {
-            // One or more blocks is out of bounds.  Bump them back in.
-            var MARGIN = 5;
-            var ToolboxWidth = Blockly.Toolbox.width;
-            var blocks = Blockly.mainWorkspace.getTopBlocks(false);
-            for (var b = 0, block; block = blocks[b]; b++) {
-              var blockXY = block.getRelativeToSurfaceXY();
-              var blockHW = block.getHeightWidth();
-              
-              // Bump any block that's above the top back inside.
-              var overflow = metrics.viewTop + MARGIN - blockHW.height -
-                  blockXY.y + blockHW.height;
-              if (overflow > 0) {
-                block.moveBy(0, overflow);
-              }
-              // Bump any block that's below the bottom back inside.
-              var overflow = metrics.viewTop + metrics.viewHeight - MARGIN -
-                  blockXY.y - blockHW.height;
-              if (overflow < 0) {
-                block.moveBy(0, overflow);
-              }
-              // Bump any block that's off the left back inside.
-              var overflow = MARGIN + ToolboxWidth + metrics.viewLeft - blockXY.x - 0;
-                  //(Blockly.RTL ? 0 : blockHW.width);
-              if (overflow > 0) {
-                block.moveBy(overflow + 30, 0);
-              }
-              // Bump any block that's off the right back inside.
-              var overflow = metrics.viewLeft + metrics.viewWidth  - MARGIN - 
-                  blockXY.x + (Blockly.RTL ? 0 : 0) + blockHW.width + 30;
-              if (overflow < 0) {
-                block.moveBy(overflow  , 0);
-              }
-            }
-          }
+	if (Blockly.Block.dragMode_ == 0) {
+		var topBlocks = Blockly.mainWorkspace.getTopBlocks(false);
+		for (var j = 0; j < topBlocks.length; j++) {
+			if (topBlocks[j].type == 'procedures_defnoreturn') {
+				restrictBoundry(topBlocks[j]);
+			}
         }
+        
+		var metrics = Blockly.getMainWorkspaceMetrics();
+      	if (metrics.contentTop < 0 ||
+        	metrics.contentTop + metrics.contentHeight > metrics.viewHeight + metrics.viewTop ||
+        	metrics.contentLeft < (Blockly.RTL ? metrics.viewLeft : 0) ||
+          	metrics.contentLeft + metrics.contentWidth > (Blockly.RTL ? metrics.viewWidth : metrics.viewWidth + metrics.viewLeft)) {
+        	// One or more blocks is out of bounds.  Bump them back in.
+      		var MARGIN = 5;
+        	var ToolboxWidth = Blockly.Toolbox.width;
+        	var blocks = Blockly.mainWorkspace.getTopBlocks(false);
+        	for (var b = 0, block; block = blocks[b]; b++) {
+          		var blockXY = block.getRelativeToSurfaceXY();
+          		var blockHW = block.getHeightWidth();
+          		
+          		// Bump any block that's above the top back inside.
+          		var overflow = metrics.viewTop + MARGIN - blockHW.height - blockXY.y + blockHW.height;
+          		if (overflow > 0) {
+            		block.moveBy(0, overflow);
+          		}
+          		// Bump any block that's below the bottom back inside.
+          		var overflow = metrics.viewTop + metrics.viewHeight - MARGIN -
+              	blockXY.y - blockHW.height;
+          		if (overflow < 0) {
+            		block.moveBy(0, overflow);
+          		}
+          		// Bump any block that's off the left back inside.
+          		var overflow = MARGIN + ToolboxWidth + metrics.viewLeft - blockXY.x - 0; //(Blockly.RTL ? 0 : blockHW.width);
+          		if (overflow > 0) {
+            		block.moveBy(overflow + 30, 0);
+          		}
+          		// Bump any block that's off the right back inside.
+          		var overflow = metrics.viewLeft + metrics.viewWidth - MARGIN -blockXY.x + (Blockly.RTL ? blockHW.width : 0);
+          		if (overflow < 0) {
+            		block.moveBy(overflow + 30, 0);
+          		}
+        	}
+		}//*/
+    }
 }
+
+//---------------------------------------------------------------------------------------
+// Bump back procedure blocks outside virtual metrics
+//---------------------------------------------------------------------------------------
+function restrictBoundry(block) {
+	var blockXY = block.getRelativeToSurfaceXY();
+    var blockHW = block.getHeightWidth();
+
+	var rand = Math.floor((Math.random() * 70) + 1);
+	var MARGIN = 10;
+	
+	// off the right
+	var overflow = blockXY.x + blockHW.width - Blockly.Virtual.X - Blockly.Virtual.Width + MARGIN;
+	if (overflow > 0) {
+		block.moveBy(-overflow - rand, 0 );
+	}
+	
+	// off the left
+	var overflow = blockXY.x - Blockly.Virtual.X - MARGIN;
+	if (overflow < 0) {
+		block.moveBy(overflow * -1 + rand, 0 );
+	}
+	
+	// off the top
+	var overflow = blockXY.y - Blockly.Virtual.Y - MARGIN;
+	if (overflow < 0) {
+		block.moveBy(0, overflow * -1 + rand);
+	}
+	
+	// off the bottom
+	var overflow = blockXY.y + blockHW.height - Blockly.Virtual.Y - Blockly.Virtual.Height + MARGIN;
+	if (overflow > 0) {
+		block.moveBy(0, -overflow - rand );
+	}
+}
+
 
 //-------------------------------------------------------------------------------------
 // Control Tooltip code
