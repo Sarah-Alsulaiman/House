@@ -406,20 +406,22 @@ function workspaceChange() {
 //---------------------------------------------------------------------------------------
 function createCallers(diff) {
 	var name = diff[0];
+	var rand = Math.floor((Math.random() * 50) + 1);
+	
 	var xmlMutation = goog.dom.createDom('mutation');
    	xmlMutation.setAttribute('name', name);
    	
    	var xmlBlock = goog.dom.createDom('block', null, xmlMutation);
    	xmlBlock.setAttribute('type', 'procedures_callnoreturn');
-   	xmlBlock.setAttribute('x' , Xposition);
-   	xmlBlock.setAttribute('y' , Yposition);
+   	xmlBlock.setAttribute('x' , Xposition + Blockly.Toolbox.width);
+   	xmlBlock.setAttribute('y' , Yposition + rand);
    	//Xposition += 30;
    	Yposition += 50;
    	
    	var text = '<xml> ';
    	text += Blockly.Xml.domToText(xmlBlock);
    	text += ' </xml>';
-   	//console.log(text);
+   	console.log("CALLER CREATED: " + text);
    	
    	Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(text));
    	BlocksTotal += 1;

@@ -864,7 +864,7 @@ Blockly.Procedures.findLegalName = function(name, block) {
     var r = name.match(/^(.*?)(\d+)$/);
     if (!r) {
       if (default_procedure) { name+= 'name'; default_procedure = false;}
-      name += '1';
+      name += '2';
     } else {
       name = r[1] + (parseInt(r[2], 10) + 1);
     }
