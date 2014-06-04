@@ -531,7 +531,7 @@ Blockly.Language.procedures_defnoreturn = {
     // Add option to create caller.
     var option = {enabled: true};
     var name = this.getTitleValue('NAME'); //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    option.text = "Create \"Build " + name + " \"" ;
+    option.text = "Create \"shortcut to: " + name + " \"" ;
     //option.text = Blockly.LANG_PROCEDURES_CREATE_DO.replace('%1', name);
   
     var xmlMutation = goog.dom.createDom('mutation');
@@ -603,7 +603,7 @@ Blockly.Language.procedures_callnoreturn = {
   init: function() {
     this.setColour(230, .45, .65);
     this.appendDummyInput()
-        .appendTitle("Build")
+        .appendTitle("shortcut to:")
         .appendTitle(Blockly.LANG_PROCEDURES_CALLNORETURN_PROCEDURE, 'NAME');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
