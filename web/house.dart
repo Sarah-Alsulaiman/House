@@ -18,9 +18,7 @@ Timer timer;
 
 /** Random CITY **/
 String CURRENT_CITY;
-
-/** Random Color **/
-String CURRENT_COLOR;
+String CURRENT_TIME;
 
 /** Colors available for each outfit **/
 List colors = ['red', 'blue', 'gold', 'lime', 'black', 'pink', 'orange' , 'purple', 'silver'];
@@ -48,7 +46,6 @@ var CURRENT_LEVEL = 1;
 String ERR_MSG = '';
 
 var CURRENT_PERSON;
-var CURRENT_TIME;
 
 String CURRENT_BLOCK = '';
 String CHECK_AGAINST = '';
@@ -257,7 +254,7 @@ void display() {
 //--------------------------------------------------------------------------
 // Interpret the user program
 //--------------------------------------------------------------------------
-void interpret (List commands, bool consider) { 
+void interpret (List commands, bool consider) {
   for (int j=0; j<commands.length; j++) {
     if (commands[j] is !List || commands[j][0] == "GET") { //ensure output blocks are connected
       break;
@@ -304,44 +301,49 @@ void interpret (List commands, bool consider) {
         
         if (CURRENT_LEVEL == "4" && color == "on") {
           if (CHECK_AGAINST == "morning") {
-            if (CURRENT_BLOCK == "then") {
+            CURRENT_BLOCK == "then" ? ERROR_THEN = 'lights_on_mismatch' : ERROR_OTHER = '';
+            
+            /*if (CURRENT_BLOCK == "then") {
               ERROR_THEN = 'lights_on_mismatch';
             }
             else { //current is other
              ERROR_OTHER = '';
-            }
+            }*/
             
           }
           
           else { //check against is evening 
-            if (CURRENT_BLOCK == "then") {
+            CURRENT_BLOCK == "then" ? ERROR_THEN = '' : ERROR_OTHER = 'lights_on_mismatch';
+            /*if (CURRENT_BLOCK == "then") {
               ERROR_THEN = '';
             }
             else { //current is other
               ERROR_OTHER = 'lights_on_mismatch';
-            }
+            }*/
           }
           
         }
         
         else if (CURRENT_LEVEL == "4" && color == "off") {
           if (CHECK_AGAINST == "morning") {
-            if (CURRENT_BLOCK == "then") {
+            CURRENT_BLOCK == "then" ? ERROR_THEN = '' : ERROR_OTHER = 'lights_off_mismatch';
+            /*if (CURRENT_BLOCK == "then") {
               ERROR_THEN = '';
             }
             else { //current is other
               ERROR_OTHER = 'lights_off_mismatch';
-            }
+            }*/
             
           }
           
           else { //check against is evening 
-            if (CURRENT_BLOCK == "then") {
+            CURRENT_BLOCK == "then" ? ERROR_THEN = 'lights_off_mismatch' : ERROR_OTHER = '';
+            /*if (CURRENT_BLOCK == "then") {
               ERROR_THEN = 'lights_off_mismatch'; 
             }
             else { //current is other
               ERROR_OTHER = '';
-            }
+            }*/
           }
           
         }
@@ -460,10 +462,9 @@ void processIf(List nested, bool consider) {
     if (condition == "Drawing") { //DRAWING FOR block is connected to IF block
       blocks[block_name['drawing']][1] = true;
       CHECK_AGAINST = (nested[1][1] == "Chicago")? "Chicago" : "Boston";
-      print("CURRENT CITY IS " + CURRENT_CITY);
-      //sendMessage("bg " + CURRENT_CITY);
       outfits.add(CURRENT_CITY);
-      if (nested[1][1] == CURRENT_CITY) {
+      
+      if (CHECK_AGAINST == CURRENT_CITY) {
         CURRENT_BLOCK = 'then';
         interpret(then, true);
         CURRENT_BLOCK = 'other';
@@ -475,18 +476,15 @@ void processIf(List nested, bool consider) {
         interpret(other, true);
         CURRENT_BLOCK = 'then';
         interpret(then, false);
-        
-      }
-        
+      }    
     }
       
      
     if (condition == "Time")  {  //TIME CONDITION
       blocks[block_name['time']][1] = true;
       CHECK_AGAINST = (nested[1][1] == "morning")? "morning" : "evening";
-      //sendMessage("bg " + CURRENT_TIME);
       outfits.add(CURRENT_TIME);
-      if (nested[1][1] == CURRENT_TIME) {
+      if (CHECK_AGAINST == CURRENT_TIME) {
         CURRENT_BLOCK = 'then';
         interpret(then, true);
         CURRENT_BLOCK = 'other';
@@ -498,21 +496,14 @@ void processIf(List nested, bool consider) {
         interpret(other, true);
         CURRENT_BLOCK = 'then';
         interpret(then, false);
-        
-      }
-     
+      } 
     }
-  
-  
   }
-  
   else { //nothing is connected to if statement
     interpret(then, false);
-    interpret(other, true);
-    
+    interpret(other, true);  
   }
-
-  }
+}
 //--------------------------------------------------------------------------
 // Generate random place and color
 //--------------------------------------------------------------------------
@@ -520,14 +511,6 @@ void randomize() {
   
   Random rnd = new Random();
   var x = rnd.nextInt(2);
-  
-  var colors = ['black', 'purple'];
-  
-  rnd = new Random();
-  x = rnd.nextInt(2);
-  
-  CURRENT_COLOR = colors[x];
-  
   
   var city = ['Chicago', 'Boston'];
   rnd = new Random();
