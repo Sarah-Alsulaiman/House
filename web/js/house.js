@@ -45,18 +45,18 @@ function logParse(type, key, comment) {
                        "<br>Can you to build a house with different colors and switch the lights on? <br><br>",
                        "<br>A flashing house will keep turning on and off the lights over and over again.<br> Can you build a flashing house that will keep turning the lights on and off 4 times?",
                        "<br>Can you program a house so that when it is daytime, the lights are switched off and when it is night time, it will be switched on?",
-                       "<br>Now, you can build a house with your favorite colors and give it a name so that you can build it faster anytime later!",
-                       "<br>Can you build a house so that when the city is Chicago, your favorite house will be built, otherwise, a different house will be built",
-                      "<br>Now, you can play with the blocks as you like!",
-                      ];
+                       "<br>Now, instead of building a new house each level, you can create a shortcut to a house and use it in later levels. You can change the colors of this house and give it a name and you'll be able to use it later<br> ",
+                       "<br>Can you build a house so that when the city is Chicago, the house <p>" + sessionStorage.UserHouse + " </p> will be built, otherwise, a different house will be built",
+                     "<br>Now, you can play with the blocks as you like!",
+                    ];
   
    var COLORS = ['red', 'blue', 'brown', 'beige', 'pink', 'purple', 'silver', 'gold', 'black'];
    var Playing = false;
    
    var BlocksTotal = 0;
+   
    var Xposition = 30;
    var Yposition = 70;
-   
    var tipImg;
    var originalRoof;
    var originalDoor;
@@ -71,6 +71,8 @@ function logParse(type, key, comment) {
    
    var dafault_procedure = false;
    var LogRequest = false;
+   
+   var UserHouse = '';
 
 //-------------------------------------------------------------------------------------
 // Convert Workspace to text
@@ -274,9 +276,9 @@ function processEvent(event) {
 }
 
 //---------------------------------------------------------------------------------------
-// Pop up repeat hint
+// Return coordinates of the WorkSpace
 //---------------------------------------------------------------------------------------
-function popUpHint(parts) {
+function getWorkSpacePosition() {
 	var cumulativeOffset = function(element) {
 	var top = 0, left = 0;
 	do {
@@ -290,19 +292,26 @@ function popUpHint(parts) {
 	};
 	
 	var wsPosition = cumulativeOffset(document.getElementById('rosie-code'));
-	//console.log("wsPosition = " + wsPosition.top);
+	return wsPosition;
+}
+
+//---------------------------------------------------------------------------------------
+// Pop up repeat hint
+//---------------------------------------------------------------------------------------
+function popUpHint(parts) {
+	var wsPosition = getWorkSpacePosition();
   	var block = Blockly.mainWorkspace.getBlockById(parts[3]);
-  	// Move the duplicate next to the old block.
-	var xy = block.getRelativeToSurfaceXY();
-	xy.x += wsPosition.left; //translate toolbox and text level here
-	xy.x += Blockly.Toolbox.width+ 200;	
-	xy.y += wsPosition.top; //translate toolbox and text level here
-	xy.y += 20;	
+	
+	var blockHW = block.getHeightWidth();
+	var blockXY = block.getRelativeToSurfaceXY();
+	var x = blockXY.x + blockHW.width + wsPosition.left + 10;
+	var y = blockXY.y + wsPosition.top;
+	
   	var id = "repeat_hint";
   	var el = document.getElementById(id);
   	el.innerHTML= 'ROUND ' + parts[4] + ' out of ' + parts[5];
-  	el.style.top =  xy.y + "px";
-  	el.style.left = xy.x + "px";
+  	el.style.top =  y + "px";
+  	el.style.left = x + "px";
   	setHtmlOpacity("repeat_hint", 1.0);
 	fadeOutAfterDelay("repeat_hint", 1000);
 }
@@ -351,7 +360,7 @@ function workspaceChange() {
 	//console.log("CHANGE");
 	var procedureNames = [[]];
 	var callNames = [];
-	var a = []; var b = []; var onlyProcedure = []; var diff = [];
+	var a = []; var b = []; var diff = [];
 	var topBlocks = Blockly.mainWorkspace.getTopBlocks(false); //+++ ALL OR TOP ONLY?
 	if (topBlocks.length > BlocksTotal) { //new blocks added
 		//console.log("new block added");
@@ -547,6 +556,7 @@ function loadBlocks (level) {
 //------------------------------------------------------------------------------------------  
 function storeProcedure () {
 	var saved_procedure = '';
+   	
    	var current_xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
    	curret_xml_text = Blockly.Xml.domToText(current_xml);
    	//console.log( curret_xml_text );
@@ -562,7 +572,18 @@ function storeProcedure () {
  	 	}
  	}
  	
-	sessionStorage.procedure = saved_procedure;
+ 	sessionStorage.procedure = saved_procedure;
+   	
+ 	var topBlocks = Blockly.mainWorkspace.getTopBlocks(false);
+		for (var j = 0; j < topBlocks.length; j++) {
+			if (topBlocks[j].type == 'procedures_defnoreturn') {
+				if (CURRENT_LEVEL == 5) {
+					var name = topBlocks[j].getProcedureDef();
+					sessionStorage.UserHouse = name[0];
+					console.log("UserHouse = " + name[0]);
+				}
+			}
+        }
 }
 
 //-------------------------------------------------------------------------------------
