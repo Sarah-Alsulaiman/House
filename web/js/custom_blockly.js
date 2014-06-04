@@ -1,3 +1,4 @@
+goog.provide('Blockly.Virtual');
 function UpdateBlocklyCode() {
 	Blockly.Virtual.Width = 280;
 	Blockly.Virtual.Height = 670;
