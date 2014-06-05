@@ -41,9 +41,9 @@ function logParse(type, key, comment) {
    var MAX_LEVEL = 7;
    var MIN_LEVEL = 1;
    var CURRENT_LEVEL = getLevel();
-   var LEVELS_MSG = ["<br>In general, a home consist of wall, roof, door, and windows. Can you build a home using these blocks<br><br>",
-                       "<br>Can you to build a house with different colors and switch the lights on? <br><br>",
-                       "<br>A flashing house will keep turning on and off the lights over and over again.<br> Can you build a flashing house that will keep turning the lights on and off 4 times?",
+   var LEVELS_MSG = ["<br>In general, a house consist of a wall, roof, door, windows and lights. Can you build a house using these blocks<br>",
+                       "<br>Can you to build a house with different colors and turn the lights on and then off three times in a row? <br><br>",
+                       "A flashing house will keep turning the lights on and off over and over again. Can you build a flashing house that will keep turning the lights on and off six times in a row using only 7 blocks?",
                        "<br>Can you program a house so that when it is daytime, the lights are switched off and when it is night time, it will be switched on?",
                        "<br>Now, instead of building a new house each level, you can create a shortcut to a house and use it in later levels. You can change the colors of this house and give it a name and you'll be able to use it later<br> ",
                        "<br>Can you build a house so that when the city is Chicago, the house <p>" + sessionStorage.UserHouse + " </p> will be built, otherwise, a different house will be built",
@@ -309,7 +309,7 @@ function popUpHint(parts) {
 	
   	var id = "repeat_hint";
   	var el = document.getElementById(id);
-  	el.innerHTML= 'ROUND ' + parts[4] + ' out of ' + parts[5];
+  	el.innerHTML= 'ROUND <p>' + parts[4] + '</p> out of ' + parts[5];
   	el.style.top =  y + "px";
   	el.style.left = x + "px";
   	setHtmlOpacity("repeat_hint", 1.0);
@@ -665,7 +665,7 @@ function bumpBackBlocks () {
 function restrictBoundry(block) {
 	var blockXY = block.getRelativeToSurfaceXY();
     var blockHW = block.getHeightWidth();
-
+	var textHeight = 50;
 	var rand = Math.floor((Math.random() * 70) + 1);
 	var MARGIN = 10;
 	
@@ -682,9 +682,9 @@ function restrictBoundry(block) {
 	}
 	
 	// off the top
-	var overflow = blockXY.y - Blockly.Virtual.Y - MARGIN;
+	var overflow = blockXY.y - Blockly.Virtual.Y  - textHeight - MARGIN;
 	if (overflow < 0) {
-		block.moveBy(0, overflow * -1 + rand);
+		block.moveBy(0, overflow * -1 + rand - textHeight/2);
 	}
 	
 	// off the bottom

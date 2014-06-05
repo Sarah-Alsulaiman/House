@@ -28,7 +28,8 @@ List parts;
 bool consider = true;
 bool check_input = false;
 bool LIGHTS_CHECK = false;
-bool REPEAT_LIGHT = false;
+bool REPEAT_LIGHT_ON = false;
+bool REPEAT_LIGHT_OFF = false;
 
 
 //format [ [blockName, value, levels] ]
@@ -44,6 +45,9 @@ List blocks = [  ['repeat', false, 3],  ['lights', false, 2], ['lights_on', fals
 var CURRENT_LEVEL = 1;
 
 String ERR_MSG = '';
+
+int LIGHTS_ON_COUNT = 0;
+int LIGHTS_OFF_COUNT = 0;
 
 var CURRENT_PERSON;
 
@@ -129,12 +133,13 @@ void main() {
   text['func'] = "Outfit definitions menu help you create a shortcut";
   text['city'] = "Remember, you need to build your favorite house in Chicago!";
   
-  text['count'] = "Remember, you need to turn the lights on and off 4 times in a row!";
+  text['count'] = "Remember, you need to turn the lights on and off 6 times in a row!";
   
-  text['repeat_stack'] = "You didn't choose anything to repeat, please place the blocks inside the repeat block";
-  text['repeat_light'] = "Remember, the lights block needs to be repeated!"; 
+  text['repeat_stack'] = "You didn't choose anything to repeat, please place the blocks you want to repeat inside the repeat block";
+  text['repeat_light_on'] = "Remember, the 'lights on' block needs to be repeated!"; 
+  text['repeat_light_off'] = "Remember, the 'lights off' block needs to be repeated!"; 
   
-  
+  text['manual_repeat'] = "Remember, you need to turn the lights on and off three times in a row!";
 }
 
 //--------------------------------------------------------------------------
@@ -145,6 +150,8 @@ void compile(String json) {
   clearBlocks();
   procedure_riyadh = false;
   ERR_MSG = '';
+  LIGHTS_ON_COUNT = 0;
+  LIGHTS_OFF_COUNT = 0;
   
   check_input = true;
   
@@ -172,27 +179,28 @@ void compile(String json) {
   //format blocks = [ [blockName, value, levels] ]
   
   if (ERR_MSG.isEmpty) {
-    validate();
+    validate(); //make sure all blocks needed are found
     if (check_input) {
+      if (CURRENT_LEVEL == "2") {
+        if (LIGHTS_ON_COUNT.toString() != "3" || LIGHTS_OFF_COUNT.toString() != "3") {
+          ERR_MSG = 'manual_repeat';
+          check_input = false;
+        }
+      }
       if (ERROR_THEN.isNotEmpty) {
         ERR_MSG = ERROR_THEN;
         check_input = false;
-      }
-        
+      } 
       if (ERROR_OTHER.isNotEmpty) {
         ERR_MSG = ERROR_OTHER;
         check_input = false;
       }
-      
       if (CURRENT_LEVEL == "6" && ! procedure_riyadh) {
         ERR_MSG = 'city';
         check_input = false;
       }
-      
     }  
   }
-    
-  
   else
     check_input = false;
 }
@@ -220,10 +228,8 @@ void validate() {
     }
       
   }
-  
- 
- 
 }
+
 //--------------------------------------------------------------------------
 // Parse JSON returned from the program
 //--------------------------------------------------------------------------
@@ -291,11 +297,17 @@ void interpret (List commands, bool consider) {
         else if (part.startsWith("lights") && consider) { 
           blocks[block_name['lights']][1]= true; 
           if (color == "on") {
-            blocks[block_name['lights_on']][1]= true; 
+            blocks[block_name['lights_on']][1]= true;
+            LIGHTS_ON_COUNT += 1;
+            if (LIGHTS_CHECK) { //came from repeat processing
+              REPEAT_LIGHT_ON = true;
+            }
           }
-          
-          if (LIGHTS_CHECK) { //came from repeat processing
-            REPEAT_LIGHT = true;
+          else {
+            LIGHTS_OFF_COUNT += 1;
+            if (LIGHTS_CHECK) { //came from repeat processing
+              REPEAT_LIGHT_OFF = true;
+            }
           }
         }
         
@@ -370,7 +382,7 @@ void processRepeat(List nested, bool consider) {
   
   blocks[block_name['repeat']][1] = true; //print("repeat FOUND");
   
-  if (count != 4 && CURRENT_LEVEL == "3") {
+  if (count != 6 && CURRENT_LEVEL == "3") {
     ERR_MSG = 'count';
   }
   
@@ -387,11 +399,14 @@ void processRepeat(List nested, bool consider) {
     LIGHTS_CHECK = false;
   }
   
-  if (!REPEAT_LIGHT && CURRENT_LEVEL == "3") { //didn't encounter lights block inside repeat
-    ERR_MSG = 'repeat_light';
-    
+  if (CURRENT_LEVEL == "3") {
+    if (!REPEAT_LIGHT_ON) { //didn't encounter lights block inside repeat
+        ERR_MSG = 'repeat_light_on';  
+    }
+    if (!REPEAT_LIGHT_OFF) {
+      ERR_MSG = 'repeat_light_off';
+    }
   }
-  
   if (block.length < 1 && CURRENT_LEVEL == "3") {
       ERR_MSG = 'repeat_stack';
     }

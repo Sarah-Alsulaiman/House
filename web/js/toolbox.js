@@ -7,32 +7,32 @@ function getToolbox() {
 	var toolbox1 = '<xml> <category></category> ';
 	toolbox1 += '  <category name="+ Building Blocks"> <block type="wall"></block> <block type="roof"></block> <block type="door"></block> <block type="windows"></block>';
 	toolbox1 += '</category> <category> </category>'; //close building blocks
+    
+    toolbox1 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
+    toolbox1 += '</category> <category> </category>'; //close lights
      
      
-     toolbox1 += '<category name="+ Coloring"> <block type="red"></block> <block type="brown"></block>' + 
+    toolbox1 += '<category name="+ Coloring"> <block type="red"></block> <block type="brown"></block>' + 
                    '<block type="black"></block> <block type="pink"></block> <block type="purple"></block> <block type="blue"></block><block type="silver"></block> ' +
                    '<block type="beige"></block> <block type="gold"></block> ' ;
-     toolbox1 += '</category> <category> </category>'; //close coloring
+    toolbox1 += '</category> <category> </category>'; //close coloring
      
     
-     toolbox1 += '</xml>';
+    toolbox1 += '</xml>';
      
      //------------------------------------------------------------------------------
      var toolbox2 = '<xml> <category></category> ';
      
-     toolbox2 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
-     toolbox2 += '</category> <category> </category>'; //close lights
-     
-     
      toolbox2 += '<category name="+ Building Blocks">  <block type="wall"></block> <block type="roof"></block> <block type="door"></block> <block type="windows"></block> ';
      toolbox2 += '</category> <category> </category>'; //close building blocks
      
-     
+     toolbox2 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
+     toolbox2 += '</category> <category> </category>'; //close lights
+    
      toolbox2 += '<category name="+ Coloring"> <block type="red"></block> <block type="brown"></block>' + 
                    '<block type="black"></block> <block type="pink"></block> <block type="purple"></block> <block type="blue"></block><block type="silver"></block> ' +
                    '<block type="beige"></block> <block type="gold"></block> ' ;
      toolbox2 += '</category> <category> </category>'; //close coloring
-     
      
      toolbox2+= '</xml>';
      
@@ -97,11 +97,11 @@ function getToolbox() {
      toolbox3 += '<category name = "+ Repeat">  <block type="control_repeat"></block>';
      toolbox3 += '</category> <category> </category>'; //close repeat
      
-     toolbox3 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
-     toolbox3 += '</category> <category> </category>'; //close lights
-     
      toolbox3 += '<category name="+ Building Blocks"> <block type="wall"></block>  <block type="roof"></block> <block type="door"></block> <block type="windows"></block>';
      toolbox3 += '</category> <category> </category>'; //close building blocks
+     
+     toolbox3 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
+     toolbox3 += '</category> <category> </category>'; //close lights
      
      toolbox3 += '<category name="+ Coloring"> <block type="red"></block> <block type="brown"></block>' + 
                    '<block type="black"></block> <block type="pink"></block> <block type="purple"></block> <block type="blue"></block><block type="silver"></block> ' +
