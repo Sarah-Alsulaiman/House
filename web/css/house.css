@@ -219,5 +219,12 @@ button {
   border-color:  rgba(127, 144, 81, .6);
   text-align: center;
   padding: 2px;
-  width: 140px;
+  width: 150px;
+  font-family: tahoma, arial, sans-serif;
+  font-size: 16px;
+}
+
+#repeat_hint p{
+  font-weight:bold;
+  display: inline;
 }
