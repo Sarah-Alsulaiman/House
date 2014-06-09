@@ -1218,7 +1218,7 @@ Blockly.Tooltip.createDom = function() {
       Blockly.createSvgElement(
           'image',{'width': 300, 'height': 400} , svgGroup));
   
-  Blockly.Tooltip.svgImg_.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/rosie.png');
+  //Blockly.Tooltip.svgImg_.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'images/rosie.png');
     
   Blockly.Tooltip.svgOutfit_ = /** @type {!SVGTextElement} */ (
       Blockly.createSvgElement(

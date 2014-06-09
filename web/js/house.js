@@ -12,8 +12,8 @@ function init() {
 	populate();
 	
 	// 3. Inject Blockly
-	controlTooltip();
-	//controlTooltip2();
+	//controlTooltip();
+	controlTooltip2();
 	inject();     
 }
 
