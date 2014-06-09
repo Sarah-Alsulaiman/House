@@ -103,11 +103,6 @@ function getToolbox() {
      toolbox3 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
      toolbox3 += '</category> <category> </category>'; //close lights
      
-     toolbox3 += '<category name="+ Coloring"> <block type="red"></block> <block type="brown"></block>' + 
-                   '<block type="black"></block> <block type="pink"></block> <block type="purple"></block> <block type="blue"></block><block type="silver"></block> ' +
-                   '<block type="beige"></block> <block type="gold"></block> ' ;
-     toolbox3 += '</category> <category> </category>'; //close coloring
-     
      toolbox3 += '</xml>';
      
      //------------------------------------------------------------------------------

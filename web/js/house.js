@@ -42,11 +42,11 @@ function logParse(type, key, comment) {
    var MIN_LEVEL = 1;
    var CURRENT_LEVEL = getLevel();
    var LEVELS_MSG = ["<br>In general, a house consist of a wall, roof, door, windows and lights. Can you build a house using these blocks<br>",
-                       "<br>Can you to build a house with different colors and turn the lights on and then off three times in a row? <br><br>",
-                       "A flashing house will keep turning the lights on and off over and over again. Can you build a flashing house that will keep turning the lights on and off six times in a row using only 7 blocks?",
+                       "<br>Can you to build a house with different colors and turn the lights on and then off 3 times in a row? <br><br>",
+                       "A flashing house will keep turning the lights on and off over and over again. Can you build a flashing house that will keep turning the lights on and off 6 times in a row using only seven blocks?<br>",
                        "<br>Can you program a house so that when it is daytime, the lights are switched off and when it is night time, it will be switched on?",
                        "<br>Now, instead of building a new house each level, you can create a shortcut to a house and use it in later levels. You can change the colors of this house and give it a name and you'll be able to use it later<br> ",
-                       "<br>Can you build a house so that when the city is Chicago, the house <p>" + sessionStorage.UserHouse + " </p> will be built, otherwise, a different house will be built",
+                       "<br>Can you build a house so that when the city is Chicago, the house \"<p>" + sessionStorage.UserHouse + " </p> \" will be built, otherwise, a different house will be built",
                      "<br>Now, you can play with the blocks as you like!",
                     ];
   
@@ -73,6 +73,7 @@ function logParse(type, key, comment) {
    var LogRequest = false;
    
    var UserHouse = '';
+   var maxBlocks = ["infinity", "infinity", "7", "infinity", "infinity", "infinity", "infinity"];
 
 //-------------------------------------------------------------------------------------
 // Convert Workspace to text
@@ -496,7 +497,7 @@ function cleanCode(code) {
 //---------------------------------------------------------------------------------------
 function inject() {
 	var toolbox = getToolbox();
-	Blockly.inject(document.getElementById('rosie-code'), {path: 'blockly/', toolbox: toolbox[CURRENT_LEVEL - 1] } );
+	Blockly.inject(document.getElementById('rosie-code'), {path: 'blockly/', toolbox: toolbox[CURRENT_LEVEL - 1], collapse: false, maxBlocks: maxBlocks[CURRENT_LEVEL - 1] } );
    	
      
 	switch(CURRENT_LEVEL) {
