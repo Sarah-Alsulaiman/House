@@ -406,7 +406,7 @@ Blockly.Language.procedures_defnoreturn = {
   init: function() {
     this.setColour(230, .45, .65);
     var name = Blockly.Procedures.findLegalName(
-        "Name", this);
+        "Type Name Here", this);
     this.appendDummyInput()
     	.appendTitle("House name: ")
         .appendTitle(new Blockly.FieldTextInput(name,
@@ -415,7 +415,7 @@ Blockly.Language.procedures_defnoreturn = {
     this.appendStatementInput('STACK')
         .appendTitle("");
    // this.setMutator(new Blockly.Mutator(['procedures_mutatorarg']));
-    this.setTooltip(Blockly.LANG_PROCEDURES_DEFNORETURN_TOOLTIP);
+    //this.setTooltip(Blockly.LANG_PROCEDURES_DEFNORETURN_TOOLTIP);
     this.arguments_ = [];
   },
   updateParams_: function() {
@@ -570,7 +570,7 @@ Blockly.Language.procedures_mutatorcontainer = {
     this.appendDummyInput()
         .appendTitle(Blockly.LANG_PROCEDURES_MUTATORCONTAINER_TITLE);
     this.appendStatementInput('STACK');
-    this.setTooltip('');
+    //this.setTooltip('');
     this.contextMenu = false;
   }
 };
@@ -584,7 +584,7 @@ Blockly.Language.procedures_mutatorarg = {
         .appendTitle(new Blockly.FieldTextInput('x', this.validator), 'NAME');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip('');
+    //this.setTooltip('');
     this.contextMenu = false;
   }
 };
@@ -607,7 +607,7 @@ Blockly.Language.procedures_callnoreturn = {
         .appendTitle(Blockly.LANG_PROCEDURES_CALLNORETURN_PROCEDURE, 'NAME');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip(Blockly.LANG_PROCEDURES_CALLNORETURN_TOOLTIP);
+    //this.setTooltip(Blockly.LANG_PROCEDURES_CALLNORETURN_TOOLTIP);
     this.arguments_ = [];
     this.quarkConnections_ = null;
     this.quarkArguments_ = null;

@@ -150,6 +150,8 @@ void compile(String json) {
   clearBlocks();
   procedure_riyadh = false;
   ERR_MSG = '';
+  ERROR_THEN = '';
+  ERROR_OTHER = '';
   LIGHTS_ON_COUNT = 0;
   LIGHTS_OFF_COUNT = 0;
   
@@ -309,65 +311,31 @@ void interpret (List commands, bool consider) {
               REPEAT_LIGHT_OFF = true;
             }
           }
+          if (CURRENT_LEVEL == "4" && color == "on") {
+            if (CHECK_AGAINST == "morning") {
+              CURRENT_BLOCK == "then" ? ERROR_THEN = 'lights_on_mismatch' : ERROR_OTHER = '';
+            }
+            
+            else { //check against is evening 
+              CURRENT_BLOCK == "then" ? ERROR_THEN = '' : ERROR_OTHER = 'lights_on_mismatch';
+            } 
+          }
+          
+          else if (CURRENT_LEVEL == "4" && color == "off") {
+            if (CHECK_AGAINST == "morning") {
+              CURRENT_BLOCK == "then" ? ERROR_THEN = '' : ERROR_OTHER = 'lights_off_mismatch';
+            }
+            
+            else { //check against is evening 
+              CURRENT_BLOCK == "then" ? ERROR_THEN = 'lights_off_mismatch' : ERROR_OTHER = '';
+            }
+          }
         }
         
-        if (CURRENT_LEVEL == "4" && color == "on") {
-          if (CHECK_AGAINST == "morning") {
-            CURRENT_BLOCK == "then" ? ERROR_THEN = 'lights_on_mismatch' : ERROR_OTHER = '';
-            
-            /*if (CURRENT_BLOCK == "then") {
-              ERROR_THEN = 'lights_on_mismatch';
-            }
-            else { //current is other
-             ERROR_OTHER = '';
-            }*/
-            
-          }
-          
-          else { //check against is evening 
-            CURRENT_BLOCK == "then" ? ERROR_THEN = '' : ERROR_OTHER = 'lights_on_mismatch';
-            /*if (CURRENT_BLOCK == "then") {
-              ERROR_THEN = '';
-            }
-            else { //current is other
-              ERROR_OTHER = 'lights_on_mismatch';
-            }*/
-          }
-          
-        }
-        
-        else if (CURRENT_LEVEL == "4" && color == "off") {
-          if (CHECK_AGAINST == "morning") {
-            CURRENT_BLOCK == "then" ? ERROR_THEN = '' : ERROR_OTHER = 'lights_off_mismatch';
-            /*if (CURRENT_BLOCK == "then") {
-              ERROR_THEN = '';
-            }
-            else { //current is other
-              ERROR_OTHER = 'lights_off_mismatch';
-            }*/
-            
-          }
-          
-          else { //check against is evening 
-            CURRENT_BLOCK == "then" ? ERROR_THEN = 'lights_off_mismatch' : ERROR_OTHER = '';
-            /*if (CURRENT_BLOCK == "then") {
-              ERROR_THEN = 'lights_off_mismatch'; 
-            }
-            else { //current is other
-              ERROR_OTHER = '';
-            }*/
-          }
-          
-        }
-        if (consider) {
-          outfits.add(outfit);
-          //print(outfit + " ADDED!");
-        }
-      
+        if (consider) { outfits.add(outfit); }
       }
     }
    }
-    
 }
 
 

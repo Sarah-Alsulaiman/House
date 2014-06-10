@@ -70,7 +70,7 @@ function getToolbox() {
      
      var toolbox6 = '<xml> <category></category> ';
      
-     toolbox6 += '<category name = "+ Home Definitions" custom="PROCEDURE">';
+     toolbox6 += '<category name = "+ Add a Definition" custom="PROCEDURE">';
      toolbox6 += '</category> <category> </category>'; //close definitions
      
      toolbox6 += '<category name = "+ Controls"> <block type = "control_if"> <value name = "CONDITION"> <block type="drawing_for"></block> </value> </block> ';
@@ -112,7 +112,7 @@ function getToolbox() {
      toolbox7 += '<category name = "+ Repeat">  <block type="control_repeat"></block>';
      toolbox7 += '</category> <category> </category>'; //close repeat
      
-     toolbox7 += '<category name = "+ Home Definitions" custom="PROCEDURE">';
+     toolbox7 += '<category name = "+ Add a Definition" custom="PROCEDURE">';
      toolbox7 += '</category> <category> </category>'; //close definitions
      
      toolbox7 += '<category name = "+ Controls"> <block type = "control_if"></block> <block type="drawing_for"></block> <block type="time_is"></block> ';
