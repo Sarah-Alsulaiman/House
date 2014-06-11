@@ -4,10 +4,11 @@
 Blockly.Language.roof = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(330, .45, .65);
+  	this.setColour(200, .93, .58);
+    //this.setColour(330, .45, .65);
     this.appendValueInput("color")
         .setCheck([String, "var"])
-        .appendTitle("Roof")
+        .appendTitle("    Roof     ");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     var thisBlock = this; 
@@ -32,10 +33,11 @@ Blockly.Language.roof = {
 Blockly.Language.wall = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(330, .45, .65);
+    //this.setColour(330, .45, .65);
+    this.setColour(200, .93, .58);
     this.appendValueInput("color")
         .setCheck([String, "var"])
-        .appendTitle("Wall")
+        .appendTitle("    Wall      ")
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     var thisBlock = this; 
@@ -59,10 +61,11 @@ Blockly.Language.wall = {
 Blockly.Language.door = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(330, .45, .65);
+  	this.setColour(200, .93, .58);
+    //this.setColour(330, .45, .65);
     this.appendValueInput("color")
         .setCheck([String, "var"])
-        .appendTitle("Door")
+        .appendTitle("    Door     ")
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     var thisBlock = this; 
@@ -86,10 +89,11 @@ Blockly.Language.door = {
 Blockly.Language.windows = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(330, .45, .65);
+  	this.setColour(200, .93, .58);
+    //this.setColour(330, .45, .65);
     this.appendValueInput("color")
         .setCheck([String, "var"])
-        .appendTitle("Windows")
+        .appendTitle(" Windows ")
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     var thisBlock = this; 
@@ -115,7 +119,7 @@ Blockly.Language.lights = {
 	init: function() {
 	 	this.setColour(260, .45, .65);
 	    this.appendDummyInput()
-        .appendTitle("lights")
+        .appendTitle("    lights     ")
         .appendTitle(new Blockly.FieldDropdown([["on", "on"], ["off", "off"]]), "lights");
         this.setPreviousStatement(true);
     	this.setNextStatement(true);
@@ -137,9 +141,11 @@ Blockly.Language.lights = {
 Blockly.Language.lights_on = {
 	helpUrl: 'http://www.example.com/',
 	init: function() {
-	 	this.setColour(260, .45, .65);
+	 	//this.setColour(260, .45, .65);
+	 	//this.setColour(305, .79, .37);
+	 	this.setColour(344, .80, .84)
 	    this.appendDummyInput()
-        .appendTitle("lights on");
+        .appendTitle("   lights on   ");
         this.setPreviousStatement(true);
     	this.setNextStatement(true);
     	var thisBlock = this; 
@@ -154,9 +160,11 @@ Blockly.Language.lights_on = {
 Blockly.Language.lights_off = {
 	helpUrl: 'http://www.example.com/',
 	init: function() {
-	 	this.setColour(260, .45, .65);
+	 	//this.setColour(260, .45, .65);
+	 	//this.setColour(305, .79, .37);
+	 	this.setColour(344, .80, .84)
 	    this.appendDummyInput()
-        .appendTitle("lights off");
+        .appendTitle("   lights off   ");
         this.setPreviousStatement(true);
     	this.setNextStatement(true);
     	var thisBlock = this; 
@@ -172,7 +180,7 @@ Blockly.Language.red = {
   init: function() {
     this.setColour(14, .95, .86);
     this.appendDummyInput()
-        .appendTitle("Red");
+        .appendTitle("   Red    ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -188,9 +196,9 @@ Blockly.Language.red = {
 Blockly.Language.blue = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(230, .45, .65);
+    this.setColour(230, .89, .44);
     this.appendDummyInput()
-        .appendTitle("Blue");
+        .appendTitle("   Blue    ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -208,7 +216,7 @@ Blockly.Language.brown = {
   init: function() {
     this.setColour(34, .92, .33);
     this.appendDummyInput()
-        .appendTitle("Brown");
+        .appendTitle("  Brown  ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -224,9 +232,9 @@ Blockly.Language.brown = {
 Blockly.Language.purple = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(290, .45, .65);
+    this.setColour(260, .58, .41);
     this.appendDummyInput()
-        .appendTitle("Purple");
+        .appendTitle("  Purple  ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -244,7 +252,7 @@ Blockly.Language.beige = {
   init: function() {
     this.setColour(34, .33, .82);
     this.appendDummyInput()
-        .appendTitle("Beige");
+        .appendTitle("  Beige   ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -262,7 +270,7 @@ Blockly.Language.black = {
   init: function() {
     //this.setColour(112, .45, .65);
     this.appendDummyInput()
-        .appendTitle("Black");
+        .appendTitle("  Black    ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -280,7 +288,7 @@ Blockly.Language.gold = {
   init: function() {
     this.setColour(48, .97, .95);
     this.appendDummyInput()
-        .appendTitle("Gold");
+        .appendTitle("   Gold    ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -296,9 +304,9 @@ Blockly.Language.gold = {
 Blockly.Language.pink = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(330, .25, .92);
+    this.setColour(344, .57, .91);
     this.appendDummyInput()
-        .appendTitle("pink");
+        .appendTitle("   Pink     ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -316,7 +324,7 @@ Blockly.Language.silver = {
   init: function() {
     this.setColour(240, .10, .61);
     this.appendDummyInput()
-        .appendTitle("Silver");
+        .appendTitle("  Silver   ");
     this.setOutput(true, String);
     this.setTooltip('');
   },
@@ -331,11 +339,11 @@ Blockly.Language.silver = {
 Blockly.Language.control_repeat = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(76, .45, .65);
+    this.setColour(180, .66, .32);
     this.appendDummyInput()
-        .appendTitle("    REPEAT")
+        .appendTitle("      REPEAT")
         .appendTitle(new Blockly.FieldTextInput("5"), "COUNT")
-        .appendTitle("TIMES")
+        .appendTitle("TIMES   ")
     this.appendStatementInput("DO");
     this.appendDummyInput();
     this.setPreviousStatement(true);
@@ -351,7 +359,9 @@ Blockly.Language.control_repeat = {
 Blockly.Language.control_if = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(34, .66, .95);
+  	this.setColour(305, .79, .37);
+  	//this.setColour(344, .80, .84)
+    //this.setColour(200, .93, .58);
     this.appendValueInput("CONDITION")
         .setCheck(["drawing_for", "time_is"])
         .setAlign(Blockly.ALIGN_RIGHT)
@@ -359,6 +369,7 @@ Blockly.Language.control_if = {
     this.appendDummyInput()
     this.appendStatementInput("THEN")
         .appendTitle("    THEN");
+    this.appendDummyInput();
     this.appendDummyInput();
     this.appendStatementInput("ELSE")
         .appendTitle("    ELSE");
@@ -373,7 +384,7 @@ Blockly.Language.control_if = {
 Blockly.Language.time_is = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(34, .66, .95);
+    this.setColour(305, .79, .37);
     this.appendDummyInput()
         .appendTitle("Time is")
         .appendTitle(new Blockly.FieldDropdown([["morning", "morning"], ["evening", "evening"]]), "time");
@@ -386,7 +397,7 @@ Blockly.Language.time_is = {
 Blockly.Language.drawing_for = {
   helpUrl: 'http://www.example.com/',
   init: function() {
-    this.setColour(34, .66, .95);
+    this.setColour(305, .79, .37);
     this.appendDummyInput()
         .appendTitle("Building in")
         .appendTitle(new Blockly.FieldDropdown([["Chicago", "Chicago"], ["Boston", "Boston"]]), "drawing_for");
@@ -404,9 +415,9 @@ Blockly.Language.procedures_defnoreturn = {
   category: null,  // Procedures are handled specially.
   helpUrl: Blockly.LANG_PROCEDURES_DEFNORETURN_HELPURL,
   init: function() {
-    this.setColour(230, .45, .65);
+    this.setColour(230, .89, .44);
     var name = Blockly.Procedures.findLegalName(
-        "Type Name Here", this);
+        "Type Name...", this);
     this.appendDummyInput()
     	.appendTitle("House name: ")
         .appendTitle(new Blockly.FieldTextInput(name,
@@ -414,6 +425,7 @@ Blockly.Language.procedures_defnoreturn = {
         .appendTitle('', 'PARAMS');
     this.appendStatementInput('STACK')
         .appendTitle("");
+     this.appendDummyInput();
    // this.setMutator(new Blockly.Mutator(['procedures_mutatorarg']));
     //this.setTooltip(Blockly.LANG_PROCEDURES_DEFNORETURN_TOOLTIP);
     this.arguments_ = [];
@@ -601,7 +613,7 @@ Blockly.Language.procedures_callnoreturn = {
   category: null,  // Procedures are handled specially.
   helpUrl: Blockly.LANG_PROCEDURES_CALLNORETURN_HELPURL,
   init: function() {
-    this.setColour(230, .45, .65);
+    this.setColour(230, .89, .44);
     this.appendDummyInput()
         .appendTitle("shortcut to:")
         .appendTitle(Blockly.LANG_PROCEDURES_CALLNORETURN_PROCEDURE, 'NAME');
