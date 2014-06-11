@@ -427,7 +427,10 @@ void processCall(List nested, bool consider) {
 //--------------------------------------------------------------------------
 void processIf(List nested, bool consider) {
   var condition = nested [1][0];
-  var id = nested[1][2];
+  var id;
+  
+  if (condition !=0) { id=nested[1][2]; }
+  
   var then = nested[2];
   var other = nested[3];
   List result;
