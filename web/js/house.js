@@ -362,7 +362,7 @@ function workspaceChange() {
 	var procedureNames = [[]];
 	var callNames = [];
 	var a = []; var b = []; var diff = [];
-	var topBlocks = Blockly.mainWorkspace.getTopBlocks(false); //+++ ALL OR TOP ONLY?
+	var topBlocks = Blockly.mainWorkspace.getAllBlocks(false); //+++ ALL OR TOP ONLY?
 	if (topBlocks.length > BlocksTotal) { //new blocks added
 		//console.log("new block added");
 		BlocksTotal = topBlocks.length;
