@@ -97,9 +97,6 @@ function getToolbox() {
      toolbox3 += '<category name = "+ Repeat">  <block type="control_repeat"></block>';
      toolbox3 += '</category> <category> </category>'; //close repeat
      
-     toolbox3 += '<category name="+ Building Blocks"> <block type="wall"></block>  <block type="roof"></block> <block type="door"></block> <block type="windows"></block>';
-     toolbox3 += '</category> <category> </category>'; //close building blocks
-     
      toolbox3 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
      toolbox3 += '</category> <category> </category>'; //close lights
      

@@ -524,6 +524,8 @@ function inject() {
          	
         case 3:
         	popUpRemaining(7);
+        	buildHouse();
+        	loadBlocks(CURRENT_LEVEL);
         	break;
        	
        	case 4:
@@ -565,7 +567,7 @@ function popUpRemaining (remain) {
 //---------------------------------------------------------------------------------------------  
 function loadBlocks (level) {
 	var xml;
-	if (level == 4) {
+	if (level == 4 || level == 3) {
 		xml = Blockly.Xml.textToDom(      
 			'<xml>' +    
 			'  <block type="wall"> <next> <block type="roof"> <next> <block type="door"> <next> <block type="windows"></block> </next> </block> </next> </block> </next> </block>' +

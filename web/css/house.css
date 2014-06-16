@@ -56,7 +56,7 @@ body {
 #rosie-output {
    position: absolute;
    left: 1110px;
-   top: 82px;
+   top: 67px;
    width: 600px;
    height: 920px;
    background: url("../images/blank.png");
@@ -171,7 +171,7 @@ button {
    z-index: 2;
    visibility : hidden;
    left: 1110px;
-   top: 88px; 
+   top: 67px; 
 }
 
 
@@ -184,7 +184,7 @@ button {
    z-index: 2;
    visibility : hidden;
    left: 1110px;
-   top: 88px;
+   top: 67px;
 }
 
 
@@ -197,7 +197,7 @@ button {
    z-index: 2;
    visibility : hidden;
    left: 1110px;
-   top: 88px;
+   top: 67px;
 }
 
 
@@ -207,7 +207,7 @@ button {
    z-index: 2;
    visibility : hidden;
    left: 1110px;
-   top: 88px;
+   top: 67px;
 }
 
 .lights {
@@ -216,7 +216,7 @@ button {
    z-index: 2;
    visibility : hidden;
    left: 1110px;
-   top: 88px;
+   top: 67px;
 }
 
 .hint {
