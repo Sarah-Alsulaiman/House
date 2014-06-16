@@ -183,7 +183,7 @@ Blockly.JavaScript.procedures_defreturn = function() {
   //var code = 'function ' + funcName + '() {\n' +
       //branch + '}';
   //code = Blockly.JavaScript.scrub_(this, code);
-  var code = '{[ "' + funcName + '", [' + branch + ' ]]}';//++
+  var code = '{[ "' + funcName + '", ' + this.id + ', [' + branch + ' ]]}';//++
   Blockly.JavaScript.definitions_[funcName] = code;
   return null;
 };

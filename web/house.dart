@@ -387,7 +387,7 @@ void processRepeat(List nested, bool consider) {
 //--------------------------------------------------------------------------
 void processCall(List nested, bool consider) {
   var funcName = nested[1];
-  var id = nested[2];
+  var innerId = nested[2];
   var block;
   var outfit;
   
@@ -409,10 +409,13 @@ void processCall(List nested, bool consider) {
   }
   for (int i=0; i < subroutines.length; i++) {
     if (funcName == subroutines[i][0]) {
-      block = subroutines[i][1];
+      block = subroutines[i][2];
       if (block.length >= 1) {blocks[block_name['abstraction']][1] = true;}
       if (consider) {
-        var call = "CALL#" + id.toString();
+        var call = "CALL#" + innerId.toString();
+        outfits.add(call);
+        
+        call = "PROC#" + subroutines[i][1].toString();
         outfits.add(call);
       }
       interpret(block, consider);
