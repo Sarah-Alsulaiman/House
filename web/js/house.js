@@ -267,11 +267,13 @@ function processEvent(event) {
      	
      	else if (msgPart[1] == "outfit"){	 // received an outfit to display
      		var outfit = msgPart[2];
-     		setHtmlVisibility(outfit, true);
      		Blockly.mainWorkspace.highlightBlock2(msgPart[3], true);
      		if (outfit == "REPEAT") {
-     			popUpHint(msgPart); 
+     			popUpHint(msgPart, true); 
+     	 	} else {
+     	 		popUpHint(msgPart, false);
      	 	}
+     	 	setHtmlVisibility(outfit, true);
      	}
     }	
 }
@@ -299,22 +301,32 @@ function getWorkSpacePosition() {
 //---------------------------------------------------------------------------------------
 // Pop up repeat hint
 //---------------------------------------------------------------------------------------
-function popUpHint(parts) {
+function popUpHint(parts, repeat) {
 	var wsPosition = getWorkSpacePosition();
   	var block = Blockly.mainWorkspace.getBlockById(parts[3]);
-	
-	var blockHW = block.getHeightWidth();
-	var blockXY = block.getRelativeToSurfaceXY();
-	var x = blockXY.x + blockHW.width + wsPosition.left + 10;
-	var y = blockXY.y + wsPosition.top;
-	
-  	var id = "repeat_hint";
-  	var el = document.getElementById(id);
-  	el.innerHTML= 'ROUND <p>' + parts[4] + '</p> out of ' + parts[5];
-  	el.style.top =  y + "px";
-  	el.style.left = x + "px";
-  	setHtmlOpacity("repeat_hint", 1.0);
-	fadeOutAfterDelay("repeat_hint", 1000);
+	if (block) {
+		var blockHW = block.getHeightWidth();
+		var blockXY = block.getRelativeToSurfaceXY();
+		var x = blockXY.x + blockHW.width + wsPosition.left + 10;
+		var y = blockXY.y + wsPosition.top;
+		var id;
+		var el;
+		if (repeat) {
+			id = "repeat_hint";
+		  	el = document.getElementById(id);
+		  	el.innerHTML= 'ROUND <p>' + parts[4] + '</p> out of ' + parts[5];
+		  	el.style.top =  y + "px";
+		} else {
+			id = "arrow";
+			el = document.getElementById(id);
+			el.innerHTML= '<img src="images/arrow2.png"> ';
+			y -= 25; //position middle of the arrow to allow tip to reach block
+			el.style.top =  y + "px";
+		}
+	  	el.style.left = x + "px";
+	  	setHtmlOpacity(id, 1.0);
+		fadeOutAfterDelay(id, 1100);
+	}
 }
   
 //---------------------------------------------------------------------------------------
@@ -362,10 +374,14 @@ function workspaceChange() {
 	var procedureNames = [[]];
 	var callNames = [];
 	var a = []; var b = []; var diff = [];
-	var topBlocks = Blockly.mainWorkspace.getAllBlocks(false); //+++ ALL OR TOP ONLY?
-	if (topBlocks.length > BlocksTotal) { //new blocks added
+	var topBlocks = Blockly.mainWorkspace.getAllBlocks(false);
+	if (topBlocks.length != BlocksTotal) { //new blocks added or deleted
 		//console.log("new block added");
 		BlocksTotal = topBlocks.length;
+		if (CURRENT_LEVEL == 3) {
+ 			var remaining = maxBlocks[CURRENT_LEVEL - 1] - BlocksTotal;
+ 			popUpRemaining(remaining);
+ 		}
 		procedureNames.length = 0; //clear the list
 		callNames.length = 0;
 		a.length = 0; b.length = 0; diff.length = 0;
@@ -442,7 +458,7 @@ function sendBlocklyCode(log) {
        	//--------------------------------------------------
        	if (code.length == 0) {
         	setHtmlOpacity("hint1", 1.0);
-         	fadeOutAfterDelay("hint1", 5000);
+         	fadeOutAfterDelay("hint1", 6000);
          	if(LogRequest) { logParse("preError", "10", "No blocks");}
        	}
        	
@@ -454,7 +470,7 @@ function sendBlocklyCode(log) {
          	//--------------------------------------------------
          	if (!connected) {
            		setHtmlOpacity("hint2", 1.0);
-           		fadeOutAfterDelay("hint2", 5000);
+           		fadeOutAfterDelay("hint2", 6000);
            		if(LogRequest) { logParse("preError", "11", "blocks not connected");}
          	}
          	
@@ -505,6 +521,10 @@ function inject() {
     		setHtmlOpacity("hint1", 1.0);
          	fadeOutAfterDelay("hint1", 5000);
          	break;
+         	
+        case 3:
+        	popUpRemaining(7);
+        	break;
        	
        	case 4:
         	buildHouse();
@@ -521,11 +541,23 @@ function inject() {
     	restoreProcedures();
      	// in LEVEL 5, start listenning to events & add virtual seperator
      	Blockly.mainWorkspace.traceOn();
-     	Blockly.mainWorkspace.getCanvas().addEventListener('blocklyWorkspaceChange', workspaceChange, false);
      	Blockly.mainWorkspace.addVirtual();
     }
    	Blockly.addChangeListener(bumpBackBlocks);
+   	Blockly.mainWorkspace.getCanvas().addEventListener('blocklyWorkspaceChange', workspaceChange, false);
     document.getElementById('full_text_div').innerHTML= LEVELS_MSG[CURRENT_LEVEL - 1];
+}
+
+//---------------------------------------------------------------------------------------------
+// Display remaining number of blocks for this level
+//---------------------------------------------------------------------------------------------
+function popUpRemaining (remain) {
+	id = "remaining_hint";
+	el = document.getElementById(id);
+	el.innerHTML= 'Remaining blocks <p>' + remain + '</p>';
+	if (remain ==0 )
+	el.innerHTML= 'Remaining blocks <p>' + remain + '</p> you cannot use any more blocks, if you want to add a block from the menu, drag one of the current blocks to the trash';
+	setHtmlOpacity('remaining_hint', 1.0);
 }
 
 //---------------------------------------------------------------------------------------------

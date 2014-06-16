@@ -77,7 +77,7 @@ void main() {
        
        if (outfits.length != 0) { Timer.run(() => display()); }
         
-       timer = new Timer.periodic(new Duration(milliseconds: 1000), (Timer t) {
+       timer = new Timer.periodic(new Duration(milliseconds: 1200), (Timer t) {
        if (outfits.length == 0) {
         timer.cancel();
         if (check_input) { sendMessage("DONE!"); }
@@ -427,10 +427,6 @@ void processCall(List nested, bool consider) {
 //--------------------------------------------------------------------------
 void processIf(List nested, bool consider) {
   var condition = nested [1][0];
-  var id;
-  
-  if (condition !=0) { id=nested[1][2]; }
-  
   var then = nested[2];
   var other = nested[3];
   List result;
@@ -442,6 +438,7 @@ void processIf(List nested, bool consider) {
   if (other.length >= 1) {blocks[block_name['other']][1] = true; print("OTHER POPULATED");}
   
   if (condition != 0) {
+    var id = nested[1][2];
     var call = "CALL#" + id.toString();
     outfits.add(call);
     
