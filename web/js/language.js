@@ -345,7 +345,6 @@ Blockly.Language.control_repeat = {
         .appendTitle(new Blockly.FieldTextInput("5"), "COUNT")
         .appendTitle("TIMES   ")
     this.appendStatementInput("DO");
-    this.appendDummyInput();
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip('');
@@ -405,7 +404,7 @@ Blockly.Language.control_if_building = {
     this.setColour(305, .79, .37);
     this.appendDummyInput()
     	.setAlign(Blockly.ALIGN_CENTRE)
-        .appendTitle("  If building in : ")
+        .appendTitle("  IF BUILDING IN : ")
         .appendTitle(new Blockly.FieldDropdown([["Chicago", "Chicago"], ["Boston", "Boston"]]), "building")
         .appendTitle("? ");
     this.appendStatementInput("THEN");
@@ -491,7 +490,6 @@ Blockly.Language.procedures_defnoreturn = {
         .appendTitle('', 'PARAMS');
     this.appendStatementInput('STACK')
         .appendTitle("");
-     this.appendDummyInput();
    // this.setMutator(new Blockly.Mutator(['procedures_mutatorarg']));
     //this.setTooltip(Blockly.LANG_PROCEDURES_DEFNORETURN_TOOLTIP);
     this.arguments_ = [];
