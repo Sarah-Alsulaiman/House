@@ -352,6 +352,72 @@ Blockly.Language.control_repeat = {
   }
 };
 
+//---------------------------------------------------------------------------
+// IF time
+//---------------------------------------------------------------------------
+Blockly.Language.control_if_time = {
+  helpUrl: 'http://www.example.com/',
+  init: function() {
+    this.setColour(305, .79, .37);
+    this.appendDummyInput()
+    	.setAlign(Blockly.ALIGN_CENTRE)
+        .appendTitle("  If timeis : ")
+        .appendTitle(new Blockly.FieldDropdown([["morning", "morning"], ["evening", "evening"]]), "time")
+        .appendTitle(" ? ");
+    this.appendStatementInput("THEN");
+    this.appendDummyInput()
+    	.appendTitle("    else ");
+    this.appendStatementInput("ELSE");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('');
+  }
+};
+
+//---------------------------------------------------------------------------
+// IF time
+//---------------------------------------------------------------------------
+Blockly.Language.control_if_time = {
+  helpUrl: 'http://www.example.com/',
+  init: function() {
+    this.setColour(305, .79, .37);
+    this.appendDummyInput()
+    	.setAlign(Blockly.ALIGN_CENTRE)
+        .appendTitle("  If time is : ")
+        .appendTitle(new Blockly.FieldDropdown([["morning", "morning"], ["evening", "evening"]]), "time")
+        .appendTitle("? ");
+    this.appendStatementInput("THEN");
+    this.appendDummyInput()
+    	.appendTitle("    else ");
+    this.appendStatementInput("ELSE");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('');
+  }
+};
+
+//---------------------------------------------------------------------------
+// IF building in
+//---------------------------------------------------------------------------
+Blockly.Language.control_if_building = {
+  helpUrl: 'http://www.example.com/',
+  init: function() {
+    this.setColour(305, .79, .37);
+    this.appendDummyInput()
+    	.setAlign(Blockly.ALIGN_CENTRE)
+        .appendTitle("  If building in : ")
+        .appendTitle(new Blockly.FieldDropdown([["Chicago", "Chicago"], ["Boston", "Boston"]]), "building")
+        .appendTitle("? ");
+    this.appendStatementInput("THEN");
+    this.appendDummyInput()
+    	.appendTitle("    else ");
+    this.appendStatementInput("ELSE");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('');
+  }
+};
+
 
 //--------------------------------------------------------------------------
 // IF 

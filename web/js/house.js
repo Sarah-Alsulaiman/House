@@ -438,7 +438,7 @@ function createCallers(diff) {
    	var text = '<xml> ';
    	text += Blockly.Xml.domToText(xmlBlock);
    	text += ' </xml>';
-   	console.log("CALLER CREATED: " + text);
+   	//console.log("CALLER CREATED: " + text);
    	
    	Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(text));
    	BlocksTotal += 1;

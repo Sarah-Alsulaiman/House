@@ -164,6 +164,28 @@ Blockly.JavaScript.control_if = function() {
   return code ;
 };
 
+Blockly.JavaScript.control_if_time = function() {
+  var time = this.getTitleValue('time');
+  var then = Blockly.JavaScript.statementToCode(this, 'THEN');
+  var other = Blockly.JavaScript.statementToCode(this, 'ELSE');
+  
+  code = '["if", ["Time", "'+ time +'", ' +this.id + ' ], [ ' + then + ' ], [' + other + '] ]';
+  
+ 
+  return code ;
+};
+
+
+Blockly.JavaScript.control_if_building = function() {
+  var city = this.getTitleValue('building');
+  var then = Blockly.JavaScript.statementToCode(this, 'THEN');
+  var other = Blockly.JavaScript.statementToCode(this, 'ELSE');
+  
+  code = '["if", ["Drawing", "'+ city +'", ' +this.id + ' ], [ ' + then + ' ], [' + other + '] ]';
+  
+ 
+  return code ;
+};
 
 'use strict';
 

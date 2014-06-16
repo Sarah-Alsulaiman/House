@@ -39,7 +39,7 @@ function getToolbox() {
      //------------------------------------------------------------------------------
      var toolbox4 = '<xml> <category></category> ';
      
-     toolbox4 += '<category name = "+ Controls"> <block type = "control_if"> <value name = "CONDITION"> <block type="time_is"></block> </value> </block>';
+     toolbox4 += '<category name = "+ Controls"> <block type="control_if_time"></block> <block type = "control_if"> <value name = "CONDITION"> <block type="time_is"></block> </value> </block>';
      toolbox4 += '</category> <category> </category>'; //close controls
      
      toolbox4 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
@@ -73,7 +73,7 @@ function getToolbox() {
      toolbox6 += '<category name = "+ Add a Definition" custom="PROCEDURE">';
      toolbox6 += '</category> <category> </category>'; //close definitions
      
-     toolbox6 += '<category name = "+ Controls"> <block type = "control_if"> <value name = "CONDITION"> <block type="drawing_for"></block> </value> </block> ';
+     toolbox6 += '<category name = "+ Controls"> <block type="control_if_building"></block> <block type = "control_if"> <value name = "CONDITION"> <block type="drawing_for"></block> </value> </block> ';
      toolbox6 += '</category> <category> </category>'; //close controls
      
      toolbox6 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
@@ -112,7 +112,7 @@ function getToolbox() {
      toolbox7 += '<category name = "+ Add a Definition" custom="PROCEDURE">';
      toolbox7 += '</category> <category> </category>'; //close definitions
      
-     toolbox7 += '<category name = "+ Controls"> <block type = "control_if"></block> <block type="drawing_for"></block> <block type="time_is"></block> ';
+     toolbox7 += '<category name = "+ Controls"> <block type="control_if_building"></block>  <block type="control_if_time"></block> ';
      toolbox7 += '</category> <category> </category>'; //close controls
      
      toolbox7 += '  <category name="+ Lights"> <block type="lights_on"></block> <block type="lights_off"></block>';
