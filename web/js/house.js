@@ -46,8 +46,8 @@ function logParse(type, key, comment) {
                        "A flashing house will keep turning the lights on and off over and over again. Can you build a flashing house that will keep turning the lights on and off 6 times in a row using only seven blocks?<br><br>",
                        "<br>Can you program a house so that when it is daytime, the lights are switched off and when it is night time, it will be switched on?",
                        "<br>Now, instead of building a new house each level, you can create a definition to a house and use it in later levels. Change the colors of this house and give it a name and you'll be able to use it later<br> ",
-                       "<br>Can you build a house so that when the city is Chicago, the house \"<p>" + sessionStorage.UserHouse + " </p> \" will be built, otherwise, a different house will be built",
-                     "<br>Now, you can play with the blocks as you like!",
+                       "<br>Can you build a house so that when the city is Chicago, the house \"<p>" + sessionStorage.UserHouse + "</p>\" will be built, otherwise, a different house will be built",
+                     "<br>Now, you can play with the blocks as you like!<br><br>",
                     ];
   
    var COLORS = ['red', 'blue', 'brown', 'beige', 'pink', 'purple', 'silver', 'gold', 'black'];

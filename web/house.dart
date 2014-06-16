@@ -224,7 +224,7 @@ void validate() {
       }
     }
     if (! ERR_MSG.isEmpty) {
-      print (ERR_MSG + " NOT FOUND");
+      //print (ERR_MSG + " NOT FOUND");
       check_input = false;
       break;
     }

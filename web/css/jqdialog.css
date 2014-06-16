@@ -43,7 +43,7 @@ pre {
 	font-size: 20px;
 	height: 90px;
 	overflow: visible;
-	color: rgba(102, 0, 102, .6);
+	color: rgba(0, 0, 128, .6);
 	text-align: left;
 }
 
@@ -54,7 +54,7 @@ pre {
 #jqDialog_options button {
 	font-family: Arial;
 	margin: 10px;
-	background: pink;
+	background: #40407f;
 	font-size: 1.2em;
 	color: #fff;
 	width: 70px;

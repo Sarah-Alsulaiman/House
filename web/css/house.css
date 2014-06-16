@@ -59,14 +59,14 @@ body {
    text-decoration: none;
    font-family: tahoma, arial, sans-serif;
    font-size: 19px;
-   color: purple;
+   color: #000080;
    margin-top: 10px;
    margin-left: 200px;
    border: 2px solid white;
 }
 
 .level-text p {
-  color: black;
+  color: #ff7f50;
   text-decoration: underline;
   display: inline;
 }
@@ -98,7 +98,7 @@ A:hover {text-decoration: underline; color: rgba(102, 0, 102, .6);}
    background-color: rgba(185, 185, 200, 1); 
    border-radius: 15px;
    border: 2px solid white;
-   border-color:  rgba(102, 0, 102, .6);
+   border-color:  rgba(0, 0, 128, .6);
    position: absolute;
    top: 930px;
    left: 600px;
