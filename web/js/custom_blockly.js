@@ -1,5 +1,16 @@
 goog.provide('Blockly.Virtual');
 function UpdateBlocklyCode() {
+
+Blockly.BlockSvg.SEP_SPACE_X = 10;
+Blockly.BlockSvg.SEP_SPACE_Y = 10;
+Blockly.BlockSvg.MIN_BLOCK_Y = 35;
+Blockly.BlockSvg.TAB_HEIGHT = 20;
+Blockly.BlockSvg.TAB_WIDTH = 8;
+Blockly.BlockSvg.NOTCH_WIDTH = 40;
+Blockly.BlockSvg.TITLE_HEIGHT = 23;
+
+
+
 	Blockly.Virtual.Width = 280;
 	Blockly.Virtual.Height = 690;
 	Blockly.Virtual.X = 600;

@@ -388,7 +388,7 @@ Blockly.Language.control_if_time = {
         .appendTitle("? ");
     this.appendStatementInput("THEN");
     this.appendDummyInput()
-    	.appendTitle("    else ");
+    	.appendTitle("   else ");
     this.appendStatementInput("ELSE");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
@@ -410,7 +410,7 @@ Blockly.Language.control_if_building = {
         .appendTitle("? ");
     this.appendStatementInput("THEN");
     this.appendDummyInput()
-    	.appendTitle("    else ");
+    	.appendTitle("   else ");
     this.appendStatementInput("ELSE");
     this.setPreviousStatement(true);
     this.setNextStatement(true);
