@@ -16,6 +16,16 @@ body {
    background-color: rgba(185, 185, 200, .9); 
 }
 
+#index {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.logo{
+    width:1000px;
+    height: auto;
+}
+
 #title {
   margin-top: 20px;
   margin-left: 800px;
@@ -107,6 +117,22 @@ A:hover {text-decoration: underline; color: rgba(102, 0, 102, .6);}
    z-index: 2147483647;
 }
 
+#start-toolbar {
+   background-color: #6d8933; 
+   border-radius: 15px;
+   border: 2px solid white;
+   border-color: #7e5922;
+   width: 200px;
+   z-index: 2147483647;
+   position: absolute;
+   top: 700px;
+   left: 850px;
+}
+
+.start-toolbar: hover {
+  background: rgba(0, 100, 0, 1); 
+}
+
 button {
    outline: none;
    border: none;
@@ -116,11 +142,14 @@ button {
    margin-left: 0px;
    margin-right: 0px;
    display: inline-block;
-   
+   cursor: pointer;
 }
 
 #play-button { background: url("../images/showbuttonW.png")  0 no-repeat; background-position: 5px 5px; }
 #play-button:active { background-position: 8px 8px; }
+
+#start-button { background: url("../images/play.png")  0 no-repeat; background-position: 5px 5px; }
+#start-button:active { background-position: 8px 8px; }
 
 
 .background {
@@ -130,8 +159,7 @@ button {
   -webkit-transition: opacity .25s ease-in-out;
   opacity: 100;
   z-index: 1;
-  visibility : hidden;
-  
+  visibility : hidden; 
 }
 
 .roof {
@@ -143,8 +171,7 @@ button {
    z-index: 2;
    visibility : hidden;
    left: 1110px;
-   top: 88px;
-  
+   top: 88px; 
 }
 
 
