@@ -12,9 +12,9 @@ function UpdateBlocklyCode() {
 	Blockly.BlockSvg.NOTCH_PATH_LEFT = 'l 6,4 3,0 6,-4';
 	Blockly.BlockSvg.NOTCH_PATH_LEFT_HIGHLIGHT = 'l 6.5,4 2,0 6.5,-4';
 
-	Blockly.Virtual.Width = 280;
+	Blockly.Virtual.Width = 310;
 	Blockly.Virtual.Height = 690;
-	Blockly.Virtual.X = 600;
+	Blockly.Virtual.X = 580;
 	Blockly.Virtual.Y = 20;
 		
 	Blockly.Css.CONTENT2 = [
