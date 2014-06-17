@@ -1,22 +1,16 @@
 goog.provide('Blockly.Virtual');
+
 function UpdateBlocklyCode() {
 
-Blockly.BlockSvg.SEP_SPACE_X = 10;
-Blockly.BlockSvg.SEP_SPACE_Y = 30;
-Blockly.BlockSvg.MIN_BLOCK_Y = 35;
-Blockly.BlockSvg.TAB_HEIGHT = 20;
-Blockly.BlockSvg.TAB_WIDTH = 8;
-//Blockly.BlockSvg.NOTCH_WIDTH = 40;
-Blockly.BlockSvg.TITLE_HEIGHT = 23;
-Blockly.BlockSvg.NOTCH_PATH_LEFT = 'l 6,4 3,0 6,-4';
-/**
- * SVG path for drawing next/previous notch from left to right with
- * highlighting.
- * @const
- */
-Blockly.BlockSvg.NOTCH_PATH_LEFT_HIGHLIGHT = 'l 6.5,4 2,0 6.5,-4';
-
-
+	Blockly.BlockSvg.SEP_SPACE_X = 15;
+	Blockly.BlockSvg.SEP_SPACE_Y = 30;
+	Blockly.BlockSvg.MIN_BLOCK_Y = 35;
+	Blockly.BlockSvg.TAB_HEIGHT = 20;
+	Blockly.BlockSvg.TAB_WIDTH = 8;
+	//Blockly.BlockSvg.NOTCH_WIDTH = 40;
+	Blockly.BlockSvg.TITLE_HEIGHT = 23;
+	Blockly.BlockSvg.NOTCH_PATH_LEFT = 'l 6,4 3,0 6,-4';
+	Blockly.BlockSvg.NOTCH_PATH_LEFT_HIGHLIGHT = 'l 6.5,4 2,0 6.5,-4';
 
 	Blockly.Virtual.Width = 280;
 	Blockly.Virtual.Height = 690;
