@@ -359,8 +359,8 @@ void processRepeat(List nested, bool consider) {
   for (var i=0; i < count; i++) {
     LIGHTS_CHECK = true;
     if (consider) {
-      var call = "REPEAT#" + id.toString() + "#" + (i+1).toString() + "#" + count.toString();
-      outfits.add(call);
+      var repeat = "REPEAT#" + id.toString() + "#" + (i+1).toString() + "#" + count.toString();
+      outfits.add(repeat);
     }
     
     interpret(block, consider);
@@ -437,13 +437,13 @@ void processIf(List nested, bool consider) {
   
   blocks[block_name['if']][1] = true;
   
-  if (then.length >= 1 ) {blocks[block_name['then']][1] = true; print("THEN POPULATED");}
-  if (other.length >= 1) {blocks[block_name['other']][1] = true; print("OTHER POPULATED");}
+  if (then.length >= 1 ) {blocks[block_name['then']][1] = true; }
+  if (other.length >= 1) {blocks[block_name['other']][1] = true; }
   
   if (condition != 0) {
     var id = nested[1][2];
-    var call = "CALL#" + id.toString();
-    outfits.add(call);
+    var con = "CONDITION#" + id.toString();
+    outfits.add(con);
     
     if (condition == "Drawing") { //DRAWING FOR block is connected to IF block
       blocks[block_name['drawing']][1] = true;
@@ -451,17 +451,23 @@ void processIf(List nested, bool consider) {
       outfits.add(CURRENT_CITY);
       
       if (CHECK_AGAINST == CURRENT_CITY) {
+        var res = "YES#" + id.toString();
+        outfits.add(res);
         CURRENT_BLOCK = 'then';
         interpret(then, true);
         CURRENT_BLOCK = 'other';
         interpret(other, false);
+        
       }
       
       else {
+        var res = "NO#" + id.toString();
+        outfits.add(res);
         CURRENT_BLOCK = 'other';
         interpret(other, true);
         CURRENT_BLOCK = 'then';
         interpret(then, false);
+        
       }    
     }
       
@@ -471,17 +477,23 @@ void processIf(List nested, bool consider) {
       CHECK_AGAINST = (nested[1][1] == "morning")? "morning" : "evening";
       outfits.add(CURRENT_TIME);
       if (CHECK_AGAINST == CURRENT_TIME) {
+        var res = "YES#" + id.toString();
+        outfits.add(res);
         CURRENT_BLOCK = 'then';
         interpret(then, true);
         CURRENT_BLOCK = 'other';
         interpret(other, false);
+        
       }
       
       else {
+        var res = "NO#" + id.toString();
+        outfits.add(res);
         CURRENT_BLOCK = 'other';
         interpret(other, true);
         CURRENT_BLOCK = 'then';
         interpret(then, false);
+        
       } 
     }
   }
