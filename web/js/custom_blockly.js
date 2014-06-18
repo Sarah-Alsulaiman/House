@@ -3,7 +3,7 @@ goog.provide('Blockly.Virtual');
 function UpdateBlocklyCode() {
 	
 	Blockly.Trashcan.prototype.MARGIN_HOTSPOTX_ = 50;
-	Blockly.Trashcan.prototype.MARGIN_HOTSPOTY_ = 30;
+	Blockly.Trashcan.prototype.MARGIN_HOTSPOTY_ = 10;
 	
 	Blockly.Trashcan.prototype.myDispose = function(blockHW, blockXY) {
 	  if (!this.svgGroup_) {
