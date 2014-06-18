@@ -5,6 +5,7 @@ function getToolbox() {
 	var toolbox = [];
 
 	var toolbox1 = '<xml> <category></category> ';
+    
 	toolbox1 += '  <category name="+ Building Blocks"> <block type="wall"></block> <block type="roof"></block> <block type="door"></block> <block type="windows"></block>';
 	toolbox1 += '</category> <category> </category>'; //close building blocks
     

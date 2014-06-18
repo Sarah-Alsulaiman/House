@@ -358,6 +358,7 @@ Blockly.Language.control_if_time = {
   helpUrl: 'http://www.example.com/',
   init: function() {
     this.setColour(305, .79, .37);
+    //this.setColour(34, .66, .95);
     this.appendDummyInput()
     	.setAlign(Blockly.ALIGN_CENTRE)
         .appendTitle("  IF TIME IS:")
@@ -870,4 +871,27 @@ Blockly.Language.heart = {
     this.setNextStatement(true);
     this.setTooltip('');
   },
+};
+
+
+//---------------------------------------------------------------------------
+// IF drawing for
+//---------------------------------------------------------------------------
+Blockly.Language.control_if_drawing = {
+  helpUrl: 'http://www.example.com/',
+  init: function() {
+    this.setColour(34, .66, .95);
+    this.appendDummyInput()
+    	.setAlign(Blockly.ALIGN_CENTRE)
+        .appendTitle("  IF DRAWING FOR:")
+        .appendTitle(new Blockly.FieldDropdown([["Teacher", "Chicago"], ["Friend", "Boston"]]), "building")
+        .appendTitle("? ");
+    this.appendStatementInput("THEN");
+    this.appendDummyInput()
+    	.appendTitle("   ELSE ");
+    this.appendStatementInput("ELSE");
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip('');
+  }
 };

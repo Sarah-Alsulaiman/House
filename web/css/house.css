@@ -16,6 +16,9 @@ body {
    background-color: rgba(185, 185, 200, .9); 
 }
 
+#zoom {
+  zoom: 100%;
+}
 #index {
   text-align: center;
   margin-top: 5px;
@@ -58,13 +61,13 @@ body {
    left: 1110px;
    top: 67px;
    width: 600px;
-   height: 920px;
+   height: 900px;
    background: url("../images/blank.png");
 }
 
 .level-text {
    background-color: white;
-   width: 888px;
+   width: 891px;
    padding: 5px;
    text-decoration: none;
    font-family: tahoma, arial, sans-serif;
@@ -72,7 +75,6 @@ body {
    color: #2B5A22;
    margin-top: 10px;
    margin-left: 200px;
-   border: 2px solid white;
 }
 
 .level-text p {
@@ -110,7 +112,7 @@ A:hover {text-decoration: underline; color: rgba(102, 0, 102, .6);}
    border: 2px solid white;
    border-color:  #6d8933;
    position: absolute;
-   top: 930px;
+   top: 900px;
    left: 600px;
    padding: 2px;
    width: 140px;
