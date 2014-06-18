@@ -54,9 +54,9 @@ function UpdateBlocklyCode() {
     //****************************************************************************************************************************************
     
 	Blockly.Virtual.Width = 310;
-	Blockly.Virtual.Height = 690;
+	Blockly.Virtual.Height = 680;
 	Blockly.Virtual.X = 580;
-	Blockly.Virtual.Y = 20;
+	Blockly.Virtual.Y = 15;
 		
 	Blockly.Css.CONTENT2 = [
 		  '.blocklySelected>.blocklyPath {',
@@ -73,6 +73,14 @@ function UpdateBlocklyCode() {
 		  '  font-family: sans-serif;',
 		  '  font-size: 16pt;',
 		  '  fill: #000;',
+		  '}',
+		  '.blocklyEditableText: hover>rect {',
+		  '  stroke-width: 2;',
+		  '  stroke: #fff;',
+		  '}',
+		  '.blocklyEditableText2>rect {',
+		  '  stroke-width: 2;',
+		  '  stroke: #fff;',
 		  '}',
 		  ''
 		];
@@ -604,7 +612,6 @@ Blockly.BlockSvg.prototype.renderDrawLeft_ = function(steps, highlightSteps,
 		 * Highlight a block in the workspace.
 		 * @param {?string} id ID of block to find.
 		 *******************************************************************************************/
-		
 		Blockly.Workspace.prototype.highlightBlock2 = function(id, pCall) {
 		 // if (!this.traceOn_) {
 		   // return;
