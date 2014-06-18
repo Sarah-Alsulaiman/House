@@ -573,7 +573,7 @@ function loadBlocks (level) {
 	if (level == 4 || level == 3) {
 		xml = Blockly.Xml.textToDom(      
 			'<xml>' +    
-			'  <block type="wall"> <next> <block type="roof"> <next> <block type="door"> <next> <block type="windows"></block> </next> </block> </next> </block> </next> </block>' +
+			'  <block type="wall" x="300" y="50"> <next> <block type="roof"> <next> <block type="door"> <next> <block type="windows"></block> </next> </block> </next> </block> </next> </block>' +
 			'</xml>');
 	} else if(level == 5) {
 		xml = Blockly.Xml.textToDom(      
@@ -651,6 +651,16 @@ function restoreProcedures() {
 //---------------------------------------------------------------------------------------
 function bumpBackBlocks () {
 	if (Blockly.Block.dragMode_ == 0) {
+		if (Blockly.selected) {
+			var trash = Blockly.selected.workspace.trashcan;
+			var blockHW = Blockly.selected.getHeightWidth();
+			var blockXY = Blockly.selected.getRelativeToSurfaceXY();
+		    var overlap = trash.myDispose(blockHW, blockXY);
+		    if (overlap) {
+		    	goog.Timer.callOnce(trash.close, 100, trash);
+	    		Blockly.selected.dispose(false, true);
+		    }
+		}
 		var topBlocks = Blockly.mainWorkspace.getTopBlocks(false);
 		for (var j = 0; j < topBlocks.length; j++) {
 			if (topBlocks[j].type == 'procedures_defnoreturn') {
@@ -695,6 +705,19 @@ function bumpBackBlocks () {
         	}
 		}//*/
     }
+    
+    /*else if (Blockly.Block.dragMode_ == 2) {
+    	console.log("DRAGGING " + Blockly.selected.id);
+    	if (Blockly.selected) {
+    		var blockHW = Blockly.selected.getHeightWidth();
+    		var blockXY = Blockly.selected.getRelativeToSurfaceXY();
+    		//console.log(blockHW.height); console.log(blockHW.width);
+    		var trash = Blockly.selected.workspace.trashcan;
+    		trash.myDispose(blockXY, blockHW);
+    		//Blockly.selected.dispose(false, true);
+    	}
+    	
+    }*/
 }
 
 //---------------------------------------------------------------------------------------

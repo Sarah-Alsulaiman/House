@@ -1,7 +1,28 @@
 goog.provide('Blockly.Virtual');
 
 function UpdateBlocklyCode() {
-
+	
+	Blockly.Trashcan.prototype.MARGIN_HOTSPOTX_ = 50;
+	Blockly.Trashcan.prototype.MARGIN_HOTSPOTY_ = 30;
+	
+	Blockly.Trashcan.prototype.myDispose = function(blockHW, blockXY) {
+	  if (!this.svgGroup_) {
+	    return;
+	  }
+	  var trashXY = Blockly.getAbsoluteXY_(this.svgGroup_);
+	  var intersectX = blockXY.x + blockHW.width + 150;
+	  var intersectY = blockXY.y + blockHW.height + 150;
+	  var over = 0; 
+	  if (intersectX > trashXY.x - this.MARGIN_HOTSPOTX_ && intersectY > trashXY.y - this.MARGIN_HOTSPOTX_) {
+	  	over = 1;
+	  }
+	  // For bonus points we might want to match the trapezoidal outline.
+	  if (this.isOpen != over) {
+	    this.setOpen_(over);
+	  }
+	  return over;
+	};
+	
 	Blockly.BlockSvg.SEP_SPACE_X = 15;
 	Blockly.BlockSvg.SEP_SPACE_Y = 30;
 	Blockly.BlockSvg.MIN_BLOCK_Y = 35;
@@ -9,9 +30,29 @@ function UpdateBlocklyCode() {
 	Blockly.BlockSvg.TAB_WIDTH = 8;
 	//Blockly.BlockSvg.NOTCH_WIDTH = 40;
 	Blockly.BlockSvg.TITLE_HEIGHT = 23;
-	Blockly.BlockSvg.NOTCH_PATH_LEFT = 'l 6,4 3,0 6,-4';
-	Blockly.BlockSvg.NOTCH_PATH_LEFT_HIGHLIGHT = 'l 6.5,4 2,0 6.5,-4';
+	Blockly.BlockSvg.CORNER_RADIUS = 8;
+    
+    Blockly.BlockSvg.connectionUiStep_ = function(ripple) {
+	  var ms = (new Date()) - ripple.startDate_;
+	  var percent = ms / 150;
+	  if (percent > 1) {
+	    goog.dom.removeNode(ripple);
+	  } else {
+	    ripple.setAttribute('r', percent * 40);
+	    ripple.style.opacity = 1 - percent;
+	    var closure = function() {
+	      Blockly.BlockSvg.connectionUiStep_(ripple);
+	    };
+	    window.setTimeout(closure, 10);
+	  }
+	};
 
+	Blockly.SNAP_RADIUS = 30;
+	
+	
+    
+    //****************************************************************************************************************************************
+    
 	Blockly.Virtual.Width = 310;
 	Blockly.Virtual.Height = 690;
 	Blockly.Virtual.X = 580;
