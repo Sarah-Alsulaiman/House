@@ -54,7 +54,7 @@ function UpdateBlocklyCode() {
     //****************************************************************************************************************************************
     
 	Blockly.Virtual.Width = 310;
-	Blockly.Virtual.Height = 680;
+	Blockly.Virtual.Height = 600;
 	Blockly.Virtual.X = 580;
 	Blockly.Virtual.Y = 15;
 		
