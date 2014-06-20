@@ -461,9 +461,9 @@ Blockly.Language.procedures_defnoreturn = {
   init: function() {
     this.setColour(230, .89, .44);
     var name = Blockly.Procedures.findLegalName(
-        "Name", this);
+        "Name...", this);
     this.appendDummyInput()
-    	.appendTitle("House name:")
+    	.appendTitle("House name: ")
         .appendTitle(new Blockly.FieldTextInput(name,
         Blockly.Procedures.rename), 'NAME')
         .appendTitle('', 'PARAMS');
@@ -658,7 +658,8 @@ Blockly.Language.procedures_callnoreturn = {
   init: function() {
     this.setColour(230, .89, .44);
     this.appendDummyInput()
-        .appendTitle("shortcut to: \"", "NAME");
+        .appendTitle("shortcut to:")
+        .appendTitle(Blockly.LANG_PROCEDURES_CALLNORETURN_PROCEDURE, 'NAME');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     //this.setTooltip(Blockly.LANG_PROCEDURES_CALLNORETURN_TOOLTIP);
@@ -674,9 +675,10 @@ Blockly.Language.procedures_callnoreturn = {
     return this.getTitleValue('NAME');
   },
   renameProcedure: function(oldName, newName) { //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  	if ( Blockly.Names.equals("shortcut to: \"".concat(oldName).concat("\" house"), (this.getTitleValue('NAME'))) ) {
-      var x = "shortcut to: \"".concat(newName).concat("\" house");
-      this.setTitleValue(x, 'NAME');
+  	if (this.linked_) {return;} 
+    if (Blockly.Names.equals(oldName, this.getTitleValue('NAME'))) {
+      this.setTitleValue(newName, 'NAME');
+      //console.log("NAME CHANGED!!!!!");
     }
   },
   setProcedureParameters: function(paramNames, paramIds) {

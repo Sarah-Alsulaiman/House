@@ -225,7 +225,7 @@ Blockly.JavaScript.procedures_callnoreturn = function() {
   //trim string
   var ind1 = funcName.substring(16);
   var stripped = ind1.substring(0, ind1.length - 9);
-  var code = '["CALL",  "' + stripped + '" , ' + this.id + ' ]';
+  var code = '["CALL",  "' + funcName + '" , ' + this.id + ' ]';
   
   return code;
 };
