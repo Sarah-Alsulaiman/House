@@ -31,7 +31,7 @@ body {
 
 #title {
   margin-top: 20px;
-  margin-left: 800px;
+  margin-left: 35%;
 }
 
 #rosie-code {
@@ -43,7 +43,7 @@ body {
 
 .preview {
   font-family: tahoma, arial, sans-serif;
-   font-size: 29px;
+  font-size: 29px;
   text-align: center;
   z-index: 2147483647;
   visibility : hidden;
@@ -57,14 +57,15 @@ body {
    position: absolute;
    left: 1110px;
    top: 67px;
-   width: 600px;
-   height: 900px;
+   width: 534px;
+   height: 801px;
    background: url("../images/blank.png");
 }
 
 .level-text {
    background-color: white;
    width: 891px;
+   height: 80px;
    padding: 5px;
    text-decoration: none;
    font-family: tahoma, arial, sans-serif;
@@ -109,7 +110,7 @@ A:hover {text-decoration: underline; color: rgba(102, 0, 102, .6);}
    border: 2px solid white;
    border-color:  #6d8933;
    position: absolute;
-   top: 900px;
+   top: 810px;
    left: 600px;
    padding: 2px;
    width: 140px;
@@ -159,9 +160,11 @@ button {
   opacity: 100;
   z-index: 1;
   visibility : hidden; 
+  width: 540px;
+  height: 810px;  
 }
 
-.roof {
+.roof, .wall, .door, .windows, .lights {
    position: absolute;
    transition: opacity .25s ease-in-out;
    -moz-transition: opacity .25s ease-in-out;
@@ -171,51 +174,8 @@ button {
    visibility : hidden;
    left: 1110px;
    top: 67px; 
-}
-
-
-.wall {
-   position: absolute;
-   transition: opacity .25s ease-in-out;
-   -moz-transition: opacity .25s ease-in-out;
-   -webkit-transition: opacity .25s ease-in-out;
-   opacity: 100;
-   z-index: 2;
-   visibility : hidden;
-   left: 1110px;
-   top: 67px;
-}
-
-
-.door {
-   position: absolute;
-   transition: opacity .25s ease-in-out;
-   -moz-transition: opacity .25s ease-in-out;
-   -webkit-transition: opacity .25s ease-in-out;
-   opacity: 100;
-   z-index: 2;
-   visibility : hidden;
-   left: 1110px;
-   top: 67px;
-}
-
-
-.windows {
-   position: absolute;
-   opacity: 1;
-   z-index: 2;
-   visibility : hidden;
-   left: 1110px;
-   top: 67px;
-}
-
-.lights {
-   position: absolute;
-   opacity: 1;
-   z-index: 2;
-   visibility : hidden;
-   left: 1110px;
-   top: 67px;
+   width: 540px;
+   height: 810px;  
 }
 
 .hint {
